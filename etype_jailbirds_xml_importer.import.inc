@@ -60,14 +60,10 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
 function etype_jailbirds_xml_importer_import() {
 
   global $user;
-  $import_files = ['edits-COMA_180106-Comanche_County.xml'];
 
   // Import URL, with commented out testing option, and check for trailing slash
   $base_import_url = 'http://etypegoogle9.com/';
-  if (substr($base_import_url, -1) !== '/') {
-    $base_import_url = $base_import_url . '/';
-  }
-  $import_file_array = explode(',', $import_files);
+  $import_file_array = ['edits-COMA_180106-Comanche_County.xml'];
 
   if (count($import_file_array) > 0) {
 

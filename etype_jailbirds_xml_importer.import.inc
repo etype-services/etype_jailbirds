@@ -45,7 +45,7 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
           break;
 
         default:
-          if (field_info_instance('node', "$k", 'article')) {
+          if (field_info_instance('node', "$k", 'fotoname')) {
             $wrapper->$k->set($v);
           }
       }
@@ -95,7 +95,18 @@ function etype_jailbirds_xml_importer_import() {
             /* loop over items in imported file */
             foreach ($obj as $element) {
               $title = $element->fname . ' ' . $element->lname;
-              echo $title . '<br />';
+              $node = [
+                'title' => $title,
+                'field_fname' => $element->fname,
+                'field_lname' => $element->lname,
+                'field_new_charge' => $element->newcharge,
+              ];
+              print_r($node);
+
+              // $values['created'] = strtotime($array['pub_date']);
+              //etype_jailbirds_xml_importer_entity_create($node, $values);
+              $i++;
+              exit;
             }
           }
         }

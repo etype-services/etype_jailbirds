@@ -94,6 +94,7 @@ function etype_jailbirds_xml_importer_import() {
             // var_dump($obj);
             /* loop over items in imported file */
             foreach ($obj as $element) {
+              var_dump($element);
               $title = $element->fname . ' ' . $element->lname;
               $node = [
                 'title' => $title,

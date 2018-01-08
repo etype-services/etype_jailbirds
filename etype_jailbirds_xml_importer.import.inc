@@ -78,7 +78,7 @@ function etype_jailbirds_xml_importer_import() {
       if (!empty($import_file)) {
 
         $values = [
-          'type' => 'article',
+          'type' => 'fotoname',
           'uid' => $user->uid,
           'status' => 0,
           'comment' => 0,
@@ -94,7 +94,8 @@ function etype_jailbirds_xml_importer_import() {
             // var_dump($obj);
             /* loop over items in imported file */
             foreach ($obj as $element) {
-              var_dump($element);
+              $title = $element->fname . ' ' . $element->lname;
+              echo $title . '<br />';
             }
           }
         }

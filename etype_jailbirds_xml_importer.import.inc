@@ -97,9 +97,9 @@ function etype_jailbirds_xml_importer_import() {
               $title = $element->fname . ' ' . $element->lname;
               $node = [
                 'title' => $title,
-                'field_fname' => $element->fname,
-                'field_lname' => $element->lname,
-                'field_new_charge' => $element->newcharge,
+                'field_fname' => (string) $element->fname,
+                'field_lname' => (string) $element->lname,
+                'field_new_charge' => (string) $element->newcharge,
               ];
               print_r($node);
 

@@ -94,8 +94,9 @@ function etype_jailbirds_xml_importer_import() {
             /* loop over items in imported file */
             if (is_array($obj->fotoname)) {
               $items = $obj->fotoname;
+              var_dump($items);
               foreach ($items as $fotoname) {
-                var_dump($fotoname);
+                //var_dump($fotoname);
               }
             }
           }

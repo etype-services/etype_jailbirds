@@ -70,42 +70,12 @@ function etype_jailbirds_xml_importer_import() {
     $i = 0;
     foreach ($import_file_array as $item) {
 
-      // echo $item;
-      $rand = md5(time());
-      $zip_file = "/tmp/" . $rand . ".zip";
-      $extract_dir = '/tmp/' . $rand . '/';
 
       /* Copy Zip file from url */
       $import_file = $base_import_url . trim($item);
-      if (!file_put_contents($zip_file, file_get_contents($import_file))) {
-        watchdog('etype_xml_importer', "Could not import " . $import_file . ".", $variables = [], $severity = WATCHDOG_WARNING);
-        continue;
-      }
-
-      /* Extract Zip Archive */
-      $zip = new ZipArchive;
-      $res = $zip->open($zip_file);
-      if ($res === TRUE) {
-        $zip->extractTo($extract_dir);
-        $zip->close();
-      }
-      else {
-        watchdog('etype', "XML Importer could not open Zip Archive %file", $variables = ['%file' => $zip_file], $severity = WATCHDOG_WARNING);
-        exit;
-      }
-
-      /* Loop over directory and get the Files */
-      $fileSystemIterator = new FilesystemIterator($extract_dir);
-      $entries = [];
-      foreach ($fileSystemIterator as $fileInfo) {
-        $entry = $fileInfo->getFilename();
-        if (strpos($entry, 'Section') !== FALSE) {
-          $entries[] = $fileInfo->getFilename();
-        }
-      }
 
       /* Loop over found files and do the extraction */
-      if (count($entries) > 0) {
+      if (!empty($import_file)) {
 
         $values = [
           'type' => 'article',
@@ -116,20 +86,19 @@ function etype_jailbirds_xml_importer_import() {
           'language' => LANGUAGE_NONE,
         ];
 
-        foreach ($entries as $entry) {
-          $xml = file_get_contents($extract_dir . $entry);
-          if ($xml !== FALSE) {
-            /* parse xml in each file */
-            $obj = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
-            if (sizeof($obj) > 0) {
-              /* loop over items in Section file */
-              var_dump($obj);
+        $xml = file_get_contents($import_file);
+        if ($xml !== FALSE) {
+          /* parse xml in each file */
+          $obj = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+          if (sizeof($obj) > 0) {
+            /* loop over items in Section file */
+            var_dump($obj);
 
-            }
           }
         }
       }
     }
+
     watchdog('etype', "eType XML Importer imported %num stories.", $variables = ['%num' => $i], $severity = WATCHDOG_NOTICE);
   }
 }

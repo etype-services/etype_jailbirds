@@ -2,16 +2,15 @@
 
 /**
  * Create Entity
+ *
  * @param array $item
  * @param array $values
  * @param string $entity_type
  */
-function etype_xml_importer_entity_create($item = array(), $values = array(), $entity_type = 'node') {
+function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $entity_type = 'node') {
 
   $entity = entity_create($entity_type, $values);
   $wrapper = entity_metadata_wrapper($entity_type, $entity);
-  $node_type = variable_get('etype_xml_node_type');
-  $kicker_format = variable_get('etype_xml_kicker_format', 'plain_text');
 
   if (count($item) > 0) {
     foreach ($item as $k => $v) {
@@ -22,36 +21,16 @@ function etype_xml_importer_entity_create($item = array(), $values = array(), $e
           break;
 
         case 'body':
-          $wrapper->body->set(array(
-            'value' => $v,
-            'summary' => $item['summary'],
-            'format' => 'full_html'
-            )
+          $wrapper->body->set([
+              'value' => $v,
+              'summary' => $item['summary'],
+              'format' => 'full_html',
+            ]
           );
           break;
 
-        case 'field_kicker':
-          if (field_info_instance('node', "field_kicker", $node_type)) {
-            switch ($kicker_format) {
-              case 'full_html':
-                $wrapper->field_kicker->set(array(
-                    'value' => $v,
-                    'format' => 'full_html'
-                  )
-                );
-                break;
-
-              default:
-                $wrapper->field_kicker->set($v);
-            }
-          }
-          break;
-
-        case 'summary':
-          break;
-
         case 'images':
-          $files = array();
+          $files = [];
           foreach ($v as $arr) {
             $file = file_save_data(file_get_contents($arr['path']), 'public://' . $arr['name']);
             $file->display = '1';
@@ -59,11 +38,12 @@ function etype_xml_importer_entity_create($item = array(), $values = array(), $e
             /* Set caption if image field caption enabled, otherwise set
             title */
             if (module_exists('image_field_caption')) {
-              $file->image_field_caption = array(
+              $file->image_field_caption = [
                 'value' => $arr['caption'],
-                'format' => 'plain_text'
-              );
-            } else {
+                'format' => 'plain_text',
+              ];
+            }
+            else {
               $file->title = $arr['caption'];
             }
             $file = file_save($file);
@@ -74,7 +54,7 @@ function etype_xml_importer_entity_create($item = array(), $values = array(), $e
           break;
 
         default:
-          if (field_info_instance('node', "$k", $node_type)) {
+          if (field_info_instance('node', "$k", 'article')) {
             $wrapper->$k->set($v);
           }
       }
@@ -84,23 +64,15 @@ function etype_xml_importer_entity_create($item = array(), $values = array(), $e
 }
 
 /**
- * Parse Olive XML Files
+ * Parse XML Files
  */
-function etype_xml_importer_olive_import() {
+function etype_jailbirds_xml_importer_import() {
 
   global $user;
   $import_files = variable_get('etype_xml_import_file');
-  if (empty($import_files)) {
-    watchdog('etype_xml_importer', "XML import setting empty.", $variables = array(), $severity = WATCHDOG_NOTICE);
-    return;
-  }
-
-  // Settings
-  $byline_field = variable_get('etype_xml_byline_field', 'field_dateline');
 
   // Import URL, with commented out testing option, and check for trailing slash
-  // $base_import_url = 'http://test.etypegoogle4.com/xml-import/';
-  $base_import_url = variable_get('etype_xml_base_import_url');
+  $base_import_url = 'http://test.etypegoogle4.com/xml-import/';
   if (substr($base_import_url, -1) !== '/') {
     $base_import_url = $base_import_url . '/';
   }
@@ -119,7 +91,7 @@ function etype_xml_importer_olive_import() {
       /* Copy Zip file from url */
       $import_file = $base_import_url . trim($item);
       if (!file_put_contents($zip_file, file_get_contents($import_file))) {
-        watchdog('etype_xml_importer', "Could not import " . $import_file . ".", $variables = array(), $severity = WATCHDOG_WARNING);
+        watchdog('etype_xml_importer', "Could not import " . $import_file . ".", $variables = [], $severity = WATCHDOG_WARNING);
         continue;
       }
 
@@ -129,17 +101,18 @@ function etype_xml_importer_olive_import() {
       if ($res === TRUE) {
         $zip->extractTo($extract_dir);
         $zip->close();
-      } else {
-        watchdog('etype', "eType XML Importer could not open Zip Archive %file", $variables = array('%file' => $zip_file), $severity = WATCHDOG_WARNING);
+      }
+      else {
+        watchdog('etype', "XML Importer could not open Zip Archive %file", $variables = ['%file' => $zip_file], $severity = WATCHDOG_WARNING);
         exit;
       }
 
       /* Loop over directory and get the Files */
       $fileSystemIterator = new FilesystemIterator($extract_dir);
-      $entries = array();
+      $entries = [];
       foreach ($fileSystemIterator as $fileInfo) {
         $entry = $fileInfo->getFilename();
-        if(strpos($entry, 'Section') !== FALSE) {
+        if (strpos($entry, 'Section') !== FALSE) {
           $entries[] = $fileInfo->getFilename();
         }
       }
@@ -147,15 +120,14 @@ function etype_xml_importer_olive_import() {
       /* Loop over found files and do the extraction */
       if (count($entries) > 0) {
 
-        $node_type = variable_get('etype_xml_node_type');
-        $values = array(
-          'type' => $node_type,
+        $values = [
+          'type' => 'article',
           'uid' => $user->uid,
           'status' => 0,
           'comment' => 0,
           'promote' => 0,
           'language' => LANGUAGE_NONE,
-        );
+        ];
 
         foreach ($entries as $entry) {
           $xml = file_get_contents($extract_dir . $entry);
@@ -173,7 +145,7 @@ function etype_xml_importer_olive_import() {
                   // title is not an object if the stub is valid
                   if (!is_object($array['title'])) {
                     // full article is in the linked file
-                    $ar_file =  $array['link'];
+                    $ar_file = $array['link'];
                     $ar_xml = file_get_contents($extract_dir . $ar_file);
 
                     /* parse article xhtml from link file */
@@ -205,7 +177,8 @@ function etype_xml_importer_olive_import() {
                     preg_match("'<xhtml:p prism:class=\"deck\">(.*?)</xhtml:p>'s", $ar_xml, $coincidencias);
                     if (isset($coincidencias[1])) {
                       $array['slugline'] = trim(strip_tags($coincidencias[1]));
-                    } else {
+                    }
+                    else {
                       $array['slugline'] = '';
                     }
 
@@ -213,29 +186,31 @@ function etype_xml_importer_olive_import() {
                     preg_match("'<xhtml:p prism:class=\"byline\">(.*?)<xhtml:br />'s", $ar_xml, $coincidencias);
                     if (isset($coincidencias[1])) {
                       $array['byline'] = trim(ucwords(strtolower(strip_tags($coincidencias[1]))));
-                    } else {
+                    }
+                    else {
                       $array['byline'] = '';
                     }
 
                     // echo $ar_xml;
 
                     /* Images */
-                    $images = array();
+                    $images = [];
                     preg_match_all("'<pam:media>(.*?)</pam:media>'s", $ar_xml, $coincidencias);
                     // loop over matches and extracat data
-                    if (! empty($coincidencias[1])) {
+                    if (!empty($coincidencias[1])) {
                       $matches = $coincidencias[1];
                       foreach ($matches as $item) {
                         preg_match("/<dc:format>([^<]+)/", $item, $imatches);
                         if (isset($imatches[1]) && $imatches[1] == 'image/jpg') {
                           preg_match("'<pam:mediaReference pam:refid=\"(.*)\" />'", $item, $arr);
                           if (isset($arr[1])) {
-                            $iarray = array();
+                            $iarray = [];
                             $iarray['image'] = $arr[1];
                             preg_match("'<pam:caption>(.*?)</pam:caption>'s", $item, $arr);
                             if (isset($arr[1])) {
                               $iarray['caption'] = trim(strip_tags($arr[1]));
-                            } else {
+                            }
+                            else {
                               $iarray['caption'] = '';
                             }
                             $images[] = $iarray;
@@ -246,32 +221,30 @@ function etype_xml_importer_olive_import() {
 
                     // print_r ($images);
 
-                    $array['images'] = array();
+                    $array['images'] = [];
                     if (count($images) > 0) {
                       foreach ($images as $image) {
                         $ipath = $extract_dir . 'img/' . $image['image'];
-                        $array['images'][] = array(
+                        $array['images'][] = [
                           'name' => $image['image'],
                           'path' => $ipath,
                           'caption' => $image['caption'],
-                        );
+                        ];
                       }
                     }
                     /* Images now part of $array */
                     // print_r ($array);
 
-                    $node = array(
+                    $node = [
                       'title' => $array['title'],
                       'summary' => strip_tags($array['description']),
                       'body' => $array['body'],
-                      'field_kicker' => $array['slugline'],
-                      $byline_field => $array['byline'],
                       'images' => $array['images'],
-                    );
+                    ];
                     // print_r($node);
 
                     $values['created'] = strtotime($array['pub_date']);
-                    etype_xml_importer_entity_create($node, $values);
+                    etype_jailbirds_xml_importer_entity_create($node, $values);
                     //exit;
                     $i++;
                     // echo $i . ' ';
@@ -283,6 +256,6 @@ function etype_xml_importer_olive_import() {
         }
       }
     }
-    watchdog('etype', "eType XML Importer imported %num stories.", $variables = array('%num' => $i), $severity = WATCHDOG_NOTICE);
+    watchdog('etype', "eType XML Importer imported %num stories.", $variables = ['%num' => $i], $severity = WATCHDOG_NOTICE);
   }
 }

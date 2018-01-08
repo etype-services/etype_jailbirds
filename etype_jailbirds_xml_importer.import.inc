@@ -68,11 +68,11 @@ function etype_jailbirds_xml_importer_import() {
   if (count($import_file_array) > 0) {
 
     $i = 0;
-    foreach ($import_file_array as $item) {
+    foreach ($import_file_array as $file) {
 
 
       /* Copy Zip file from url */
-      $import_file = $base_import_url . trim($item);
+      $import_file = $base_import_url . trim($file);
 
       /* Loop over found files and do the extraction */
       if (!empty($import_file)) {

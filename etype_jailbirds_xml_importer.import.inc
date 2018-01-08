@@ -102,9 +102,11 @@ function etype_jailbirds_xml_importer_import() {
                 'field_lname' => (string) $element->lname,
                 'field_new_charge' => (string) $element->newcharge,
               ];
-              print_r($node);
 
-              // $values['created'] = strtotime($array['pub_date']);
+              $tmp = simplexml_load_string($element->timestamp, 'SimpleXMLElement', LIBXML_NOCDATA);
+              var_dump($tmp);
+
+              print_r($node);
               //etype_jailbirds_xml_importer_entity_create($node, $values);
               $i++;
               exit;

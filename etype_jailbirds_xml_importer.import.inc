@@ -93,10 +93,8 @@ function etype_jailbirds_xml_importer_import() {
           if (sizeof($obj) > 0) {
             // var_dump($obj);
             /* loop over items in imported file */
-            $items = $obj->fotoname;
-            var_dump($items);
-            foreach ($items as $fotoname) {
-              //var_dump($fotoname);
+            foreach ($obj as $element) {
+              var_dump($element);
             }
           }
         }

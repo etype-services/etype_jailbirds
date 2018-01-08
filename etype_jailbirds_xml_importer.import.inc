@@ -91,6 +91,7 @@ function etype_jailbirds_xml_importer_import() {
           /* parse xml in each file */
           $obj = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
           if (sizeof($obj) > 0) {
+            var_dump($obj);
             /* loop over items in imported file */
             if (is_array($obj->fotoname)) {
               $items = $obj->fotoname;

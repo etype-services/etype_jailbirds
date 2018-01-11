@@ -112,7 +112,7 @@ function etype_jailbirds_xml_importer_import() {
                 'field_charge' => (string) $element->charge,
               ];
 
-              print_r($node);
+              $values['created'] = strtotime($element->pub_date);
 
               etype_jailbirds_xml_importer_entity_create($node, $values);
               $i++;

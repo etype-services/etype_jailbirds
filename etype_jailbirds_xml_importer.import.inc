@@ -97,9 +97,9 @@ function etype_jailbirds_xml_importer_import() {
               $tmp = (string) $element->dob;
               $dob = strtotime($tmp);
               $tmp = (string) $element->BookedDate;
-              $BookedDate = strtotime($tmp);
+              empty($tmp)? $BookedDate = 0: $BookedDate = strtotime($tmp);
               $tmp = (string) $element->ReleasedDate;
-              $ReleasedDate = strtotime($tmp);
+              empty($tmp)? $ReleasedDate = 0: $ReleasedDate = strtotime($tmp);
               $node = [
                 'title' => (string) $element->name,
                 'field_name' => (string) $element->name,

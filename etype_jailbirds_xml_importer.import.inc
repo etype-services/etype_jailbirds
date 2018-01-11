@@ -115,11 +115,8 @@ function etype_jailbirds_xml_importer_import() {
                 'field_county' => key($county),
                 'field_edition' => key($edition),
               ];
-              exit;
-
               $values['created'] = strtotime($element->pub_date);
-
-              // etype_jailbirds_xml_importer_entity_create($node, $values);
+              etype_jailbirds_xml_importer_entity_create($node, $values);
               $i++;
             }
           }

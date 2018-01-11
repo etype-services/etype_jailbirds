@@ -95,13 +95,20 @@ function etype_jailbirds_xml_importer_import() {
             /* loop over items in imported file */
             foreach ($obj as $element) {
               var_dump($element);
-              $title = $element->fname . ' ' . $element->lname;
+              $title = $element->name;
               $node = [
                 'title' => $title,
-                'field_name' => (string) $element->fname,
-                'field_lname' => (string) $element->lname,
-                'field_new_charge' => (string) $element->newcharge,
+                'field_name' => (string) $element->name,
+                'field_sex' => (string) $element->Sex,
+                'field_race' => (string) $element->Race,
+                'field_date_of_birth' => (string) $element->dob,
+                'field_address' => (string) $element->Address,
+                'field_booked_date' => (string) $element->BookedDate,
+                'field_released_date' => (string) $element->ReleasedDate,
+                'field_charge' => (string) $element->charge,
               ];
+
+              print_r($node);
 
               //etype_jailbirds_xml_importer_entity_create($node, $values);
               $i++;

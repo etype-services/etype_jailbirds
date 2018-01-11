@@ -63,7 +63,7 @@ function etype_jailbirds_xml_importer_import() {
 
   // Import URL, with commented out testing option, and check for trailing slash
   $base_import_url = 'http://etypegoogle9.com/';
-  $import_file_array = ['edits-COMA_180106-Comanche_County.xml'];
+  $import_file_array = ['COMA_180106-2.xml'];
 
   if (count($import_file_array) > 0) {
 
@@ -90,6 +90,7 @@ function etype_jailbirds_xml_importer_import() {
         if ($xml !== FALSE) {
           /* parse xml in each file */
           $obj = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+          dpm($obj);
           if (sizeof($obj) > 0) {
             // var_dump($obj);
             /* loop over items in imported file */

@@ -100,8 +100,8 @@ function etype_jailbirds_xml_importer_import() {
               empty($tmp)? $BookedDate = 0: $BookedDate = strtotime($tmp);
               $tmp = (string) $element->ReleasedDate;
               empty($tmp)? $ReleasedDate = 0: $ReleasedDate = strtotime($tmp);
-              $term = taxonomy_get_term_by_name($element->county);
-              print_r($term);
+              $county = taxonomy_get_term_by_name($element->county);
+              $edition = taxonomy_get_term_by_name($element->edition);
               $node = [
                 'title' => (string) $element->name,
                 'field_name' => (string) $element->name,
@@ -112,6 +112,8 @@ function etype_jailbirds_xml_importer_import() {
                 'field_booked_date' => $BookedDate,
                 'field_released_date' => $ReleasedDate,
                 'field_charge' => (string) $element->charge,
+                'field_county' => key($county),
+                'field_edition' => key($edition),
               ];
               exit;
 

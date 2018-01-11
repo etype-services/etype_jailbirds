@@ -90,7 +90,6 @@ function etype_jailbirds_xml_importer_import() {
         if ($xml !== FALSE) {
           /* parse xml in each file */
           $obj = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
-          dpm($obj);
           if (sizeof($obj) > 0) {
             // var_dump($obj);
             /* loop over items in imported file */
@@ -99,18 +98,13 @@ function etype_jailbirds_xml_importer_import() {
               $title = $element->fname . ' ' . $element->lname;
               $node = [
                 'title' => $title,
-                'field_fname' => (string) $element->fname,
+                'field_name' => (string) $element->fname,
                 'field_lname' => (string) $element->lname,
                 'field_new_charge' => (string) $element->newcharge,
               ];
 
-              $tmp = simplexml_load_string($element->timestamp, 'SimpleXMLElement', LIBXML_NOCDATA);
-              var_dump($tmp);
-
-              print_r($node);
               //etype_jailbirds_xml_importer_entity_create($node, $values);
               $i++;
-              exit;
             }
           }
         }

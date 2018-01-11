@@ -106,9 +106,9 @@ function etype_jailbirds_xml_importer_import() {
                 'field_charge' => (string) $element->charge,
               ];
 
-              print_r($node);
+              // print_r($node);
 
-              //etype_jailbirds_xml_importer_entity_create($node, $values);
+              etype_jailbirds_xml_importer_entity_create($node, $values);
               $i++;
             }
           }

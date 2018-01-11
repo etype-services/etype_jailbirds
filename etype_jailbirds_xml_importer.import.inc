@@ -96,6 +96,10 @@ function etype_jailbirds_xml_importer_import() {
             foreach ($obj as $element) {
               $tmp = (string) $element->dob;
               $dob = strtotime($tmp);
+              $tmp = (string) $element->BookedDate;
+              $BookedDate = strtotime($tmp);
+              $tmp = (string) $element->ReleasedDate;
+              $ReleasedDate = strtotime($tmp);
               $node = [
                 'title' => (string) $element->name,
                 'field_name' => (string) $element->name,
@@ -103,8 +107,8 @@ function etype_jailbirds_xml_importer_import() {
                 'field_race' => (string) $element->Race,
                 'field_date_of_birth' => $dob,
                 'field_address' => (string) $element->Address,
-                //'field_booked_date' => (string) $element->BookedDate,
-                //'field_released_date' => (string) $element->ReleasedDate,
+                'field_booked_date' => $BookedDate,
+                'field_released_date' => $ReleasedDate,
                 'field_charge' => (string) $element->charge,
               ];
 

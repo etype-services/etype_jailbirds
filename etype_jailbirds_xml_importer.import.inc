@@ -61,9 +61,9 @@ function etype_jailbirds_xml_importer_import() {
 
   global $user;
 
-  // Import URL, with commented out testing option, and check for trailing slash
-  $base_import_url = 'http://etypegoogle9.com/';
-  $import_file_array = ['COMA_180106-2.xml'];
+  // Import URL
+  $base_import_url = 'http://archives.etypeservices.com/OKJAILBIRDS/';
+  $import_file_array = ['okj_import-1801241046.xml'];
 
   if (count($import_file_array) > 0) {
 
@@ -103,7 +103,7 @@ function etype_jailbirds_xml_importer_import() {
               $county = taxonomy_get_term_by_name($element->county);
               $edition = taxonomy_get_term_by_name($element->edition);
               $node = [
-                'title' => (string) $element->name,
+                'title' => (string) $element->fname . ' ' . (string) $element->lname,
                 'field_name' => (string) $element->name,
                 'field_sex' => (string) $element->Sex,
                 'field_race' => (string) $element->Race,
@@ -111,9 +111,10 @@ function etype_jailbirds_xml_importer_import() {
                 'field_address' => (string) $element->Address,
                 'field_booked_date' => $BookedDate,
                 'field_released_date' => $ReleasedDate,
-                'field_charge' => (string) $element->charge,
+                'field_charge' => (string) $element->charges,
                 'field_county' => key($county),
-                'field_edition' => key($edition),
+                'field_guid' => (string) $element->guid,
+                'image' => string($element->foto),
               ];
               $values['created'] = strtotime($element->pub_date);
               etype_jailbirds_xml_importer_entity_create($node, $values);

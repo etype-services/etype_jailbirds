@@ -22,7 +22,7 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
 
         case 'image':
           $files = [];
-          $file = file_save_data(file_get_contents($v['path']), 'public://' . $v['name'] . '_' . $values['created']);
+          $file = file_save_data(file_get_contents($v['path']), 'public://' . $v['name']);
           $file->display = '1';
           $file->description = $v['name'];
           /* Set caption if image field caption enabled, otherwise set title */
@@ -99,6 +99,7 @@ function etype_jailbirds_xml_importer_import() {
               empty($tmp)? $ReleasedDate = 0: $ReleasedDate = strtotime($tmp);
               $county = taxonomy_get_term_by_name($element->county);
               $edition = taxonomy_get_term_by_name($element->edition);
+              $created = strtotime($element->pub_date);
               $node = [
                 'title' => (string) $element->fname . ' ' . (string) $element->lname,
                 'field_name' => (string) $element->name,
@@ -112,10 +113,12 @@ function etype_jailbirds_xml_importer_import() {
                 'field_county' => key($county),
                 'field_edition' => key($edition),
                 'field_guid' => (string) $element->guid,
-                'image' => ['path' => $element->foto, 'name' => $element->name]
+                'image' => ['path' => $element->foto, 'name' => $element->lname . $element->fname . $created]
               ];
-              $values['created'] = strtotime($element->pub_date);
-              etype_jailbirds_xml_importer_entity_create($node, $values);
+              $values['created'] = $created;
+              var_dump($node);
+              exit;
+              // etype_jailbirds_xml_importer_entity_create($node, $values);
               $i++;
             }
           }

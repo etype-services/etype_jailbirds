@@ -20,27 +20,24 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
           $wrapper->$k->set($v);
           break;
 
-        case 'images':
+        case 'image':
           $files = [];
-          foreach ($v as $arr) {
-            $file = file_save_data(file_get_contents($arr['path']), 'public://' . $arr['name']);
-            $file->display = '1';
-            $file->description = $arr['caption'];
-            /* Set caption if image field caption enabled, otherwise set
-            title */
-            if (module_exists('image_field_caption')) {
-              $file->image_field_caption = [
-                'value' => $arr['caption'],
-                'format' => 'plain_text',
-              ];
-            }
-            else {
-              $file->title = $arr['caption'];
-            }
-            $file = file_save($file);
-            $file = (array) $file;
-            $files[] = $file;
+          $file = file_save_data(file_get_contents($v['path']), 'public://' . $v['name']);
+          $file->display = '1';
+          $file->description = $v['name'];
+          /* Set caption if image field caption enabled, otherwise set title */
+          if (module_exists('image_field_caption')) {
+            $file->image_field_caption = [
+              'value' => $v['name'],
+              'format' => 'plain_text',
+            ];
           }
+          else {
+            $file->title = $v['name'];
+          }
+          $file = file_save($file);
+          $file = (array) $file;
+          $files[] = $file;
           $wrapper->field_image->set($files);
           break;
 
@@ -115,7 +112,7 @@ function etype_jailbirds_xml_importer_import() {
                 'field_county' => key($county),
                 'field_edition' => key($edition),
                 'field_guid' => (string) $element->guid,
-                'image' => $element->foto,
+                'image' => ['path' => $element->foto, 'name' => $element->name]
               ];
               $values['created'] = strtotime($element->pub_date);
               etype_jailbirds_xml_importer_entity_create($node, $values);

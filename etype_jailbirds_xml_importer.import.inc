@@ -22,7 +22,7 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
 
         case 'image':
           $files = [];
-          $file = file_save_data(file_get_contents($v['path']), 'public://' . $v['name']);
+          $file = file_save_data(file_get_contents($v['path']), 'public://' . $v['name'] . '_' . $values['created']);
           $file->display = '1';
           $file->description = $v['name'];
           /* Set caption if image field caption enabled, otherwise set title */

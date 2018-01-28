@@ -99,7 +99,7 @@ function etype_jailbirds_xml_importer_import() {
               empty($tmp)? $ReleasedDate = 0: $ReleasedDate = strtotime($tmp);
               $county = taxonomy_get_term_by_name($element->county);
               $edition = taxonomy_get_term_by_name($element->edition);
-              $created = strtotime($element->pub_date);
+              $created = strtotime($element->pubdate);
               $node = [
                 'title' => (string) $element->fname . ' ' . (string) $element->lname,
                 'field_name' => (string) $element->name,
@@ -113,11 +113,9 @@ function etype_jailbirds_xml_importer_import() {
                 'field_county' => key($county),
                 'field_edition' => key($edition),
                 'field_guid' => (string) $element->guid,
-                'image' => ['path' => $element->foto, 'name' => $element->lname . $element->fname . $created]
+                // 'image' => ['path' => $element->foto, 'name' => $element->lname . $element->fname . $created]
               ];
               $values['created'] = $created;
-              var_dump($node);
-              exit;
               // etype_jailbirds_xml_importer_entity_create($node, $values);
               $i++;
             }

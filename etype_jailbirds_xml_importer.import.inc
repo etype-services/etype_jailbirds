@@ -116,7 +116,7 @@ function etype_jailbirds_xml_importer_import() {
                 // 'image' => ['path' => $element->foto, 'name' => $element->lname . $element->fname . $created]
               ];
               $values['created'] = $created;
-              // etype_jailbirds_xml_importer_entity_create($node, $values);
+              etype_jailbirds_xml_importer_entity_create($node, $values);
               $i++;
             }
           }

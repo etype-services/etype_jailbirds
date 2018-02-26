@@ -68,11 +68,12 @@ function etype_jailbirds_xml_importer_import() {
   $conn_id = ftp_connect($ftp_server);
   $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-  echo $login_result;
-
-  exit;
-
   if ($login_result === true) {
+
+    $contents = ftp_nlist($conn_id, ".");
+
+    var_dump($contents);
+    exit;
 
     // if there are import files
     if (count($import_file_array) > 0) {

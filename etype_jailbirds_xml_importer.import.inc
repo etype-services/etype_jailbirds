@@ -123,6 +123,7 @@ function etype_jailbirds_xml_importer_import() {
             $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
 
             echo $foto;
+            $foto_contents = ftp_nlist($conn_id, "./clients/BIRD/AAincoming");
 
             if (ftp_get($conn_id, '/tmp/$foto', $foto, FTP_BINARY)) {
               echo "Se ha guardado satisfactoriamente\n";

@@ -85,6 +85,8 @@ function etype_jailbirds_xml_importer_import() {
         /* Loop over found files and do the extraction */
         if (!empty($data)) {
 
+          var_dump($data);
+
           $values = [
             'type' => 'fotoname',
             'uid' => $user->uid,

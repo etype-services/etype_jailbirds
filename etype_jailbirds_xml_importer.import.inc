@@ -65,7 +65,7 @@ function etype_jailbirds_xml_importer_import() {
   $ftp_server="104.155.211.165";
   $ftp_user_name="MGreene";
   $ftp_user_pass="M@etype1#";
-  $conn_id = ftp_connect($ftp_server);
+  $conn_id = ftp_connect($ftp_server, true);
   $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
   if ($login_result === true) {

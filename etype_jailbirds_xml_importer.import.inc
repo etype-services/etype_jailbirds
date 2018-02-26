@@ -106,6 +106,8 @@ function etype_jailbirds_xml_importer_import() {
             $term = (object) ['vid' => '11', 'name' => $element->county];
             taxonomy_term_save($term);
             $county = taxonomy_get_term_by_name($element->county);
+            var_dump($county);
+            exit;
           }
 
           $charge = isset($element->charge)? $element->charge: $element->charge;

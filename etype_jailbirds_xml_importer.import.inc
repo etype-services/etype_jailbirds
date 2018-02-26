@@ -102,11 +102,11 @@ function etype_jailbirds_xml_importer_import() {
           }
 
           $county = taxonomy_get_term_by_name($element->county, 'county');
-          //if (empty($county)) {
-           // $term = (object) ['vid' => '11', 'name' => $element->county, 'vocabulary_machine_id' => 'county'];
-           // taxonomy_term_save($term);
-           // $county = taxonomy_get_term_by_name($element->county, 'county');
-          //}
+          if (empty($county)) {
+            $term = (object) ['vid' => '11', 'name' => $element->county, 'vocabulary_machine_id' => 'county'];
+            taxonomy_term_save($term);
+            $county = taxonomy_get_term_by_name($element->county, 'county');
+          }
 
           $charge = isset($element->charge)? $element->charge: $element->charge;
           $created = strtotime($element->pubdate);
@@ -116,7 +116,7 @@ function etype_jailbirds_xml_importer_import() {
             'field_booked_date' => $BookedDate,
             'field_released_date' => $ReleasedDate,
             'field_charge' => $charge,
-            'field_county' => $county,
+            //'field_county' => $county,
             'field_edition' => $edition,
             'field_guid' => $element->guid,
             // 'image' => ['path' => $element->foto, 'name' => $element->lname . $element->fname . $created]

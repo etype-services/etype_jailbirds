@@ -108,6 +108,8 @@ function etype_jailbirds_xml_importer_import() {
             $county = taxonomy_get_term_by_name($element->county, 'county');
           }
 
+          $foto = str_replace('\\', "");
+
           $charge = isset($element->charge)? $element->charge: $element->charge;
           $created = strtotime($element->pubdate);
           $node = [
@@ -119,8 +121,10 @@ function etype_jailbirds_xml_importer_import() {
             'field_county' => $county['tid'],
             'field_edition' => $edition['tid'],
             'field_guid' => $element->guid,
-            // 'image' => ['path' => $element->foto, 'name' => $element->lname . $element->fname . $created]
+            'image' => file($foto),
           ];
+          var_dump($node);
+          exit;
           $values['created'] = $created;
           etype_jailbirds_xml_importer_entity_create($node, $values);
           $i++;

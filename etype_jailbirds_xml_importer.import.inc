@@ -87,38 +87,34 @@ function etype_jailbirds_xml_importer_import() {
         ];
         $i = 0;
 
-        foreach ($data as $k => $v) {
+        foreach ($data as $k => $element) {
 
-          var_dump($k);
-          var_dump($v);
-          continue;
-
-          $tmp = (string) $element->dob;
+          $tmp = $element->dob;
           $dob = strtotime($tmp);
-          $tmp = (string) $element->BookedDate;
+          $tmp = $element->BookedDate;
           empty($tmp)? $BookedDate = 0: $BookedDate = strtotime($tmp);
-          $tmp = (string) $element->ReleasedDate;
+          $tmp = $element->ReleasedDate;
           empty($tmp)? $ReleasedDate = 0: $ReleasedDate = strtotime($tmp);
           $county = taxonomy_get_term_by_name($element->county);
           $edition = taxonomy_get_term_by_name($element->edition);
           $created = strtotime($element->pubdate);
           $node = [
-            'title' => (string) $element->fname . ' ' . (string) $element->lname,
-            'field_name' => (string) $element->name,
-            'field_sex' => (string) $element->Sex,
-            'field_race' => (string) $element->Race,
+            'title' => $element->fname . ' ' . (string) $element->lname,
+            'field_name' => $element->name,
+            'field_sex' => $element->Sex,
+            'field_race' => $element->Race,
             'field_date_of_birth' => $dob,
-            'field_address' => (string) $element->Address,
+            'field_address' => $element->Address,
             'field_booked_date' => $BookedDate,
             'field_released_date' => $ReleasedDate,
-            'field_charge' => (string) $element->charges,
-            'field_county' => key($county),
-            'field_edition' => key($edition),
-            'field_guid' => (string) $element->guid,
+            'field_charge' => $element->charge,
+            'field_county' => $county,
+            'field_edition' => $edition,
+            'field_guid' => $element->guid,
             // 'image' => ['path' => $element->foto, 'name' => $element->lname . $element->fname . $created]
           ];
           $values['created'] = $created;
-          // etype_jailbirds_xml_importer_entity_create($node, $values);
+          etype_jailbirds_xml_importer_entity_create($node, $values);
           $i++;
         }
       }

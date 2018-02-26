@@ -74,8 +74,6 @@ function etype_jailbirds_xml_importer_import() {
     $contents = ftp_nlist($conn_id, "./clients/BIRD/AAincoming");
     $import_file_array = preg_grep("/\.json/", $contents);
 
-    var_dump($import_file_array);
-
     // if there are import files
     if (count($import_file_array) > 0) {
 
@@ -84,11 +82,9 @@ function etype_jailbirds_xml_importer_import() {
       foreach ($import_file_array as $file) {
 
         $import_file = $base_import_url . trim($file);
-
         $json_file = file_get_contents($import_file);
         // convert the string to a json object
         $data = json_decode($json_file);
-
         /* Loop over found files and do the extraction */
         if (!empty($data)) {
 
@@ -124,6 +120,7 @@ function etype_jailbirds_xml_importer_import() {
             }
 
             $foto = str_replace('\\\\', "", $element->foto);
+            $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
 
             echo $foto;
 

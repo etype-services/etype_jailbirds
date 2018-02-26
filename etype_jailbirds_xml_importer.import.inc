@@ -89,14 +89,25 @@ function etype_jailbirds_xml_importer_import() {
 
         foreach ($data as $k => $element) {
 
-          $tmp = $element->dob;
-          $dob = strtotime($tmp);
           $tmp = $element->BookedDate;
           empty($tmp)? $BookedDate = 0: $BookedDate = strtotime($tmp);
           $tmp = $element->ReleasedDate;
           empty($tmp)? $ReleasedDate = 0: $ReleasedDate = strtotime($tmp);
+
           $county = taxonomy_get_term_by_name($element->county);
+          if (empty($county)) {
+            $term = (object) ['vid' => '10', 'name' => $element->county];
+            taxonomy_term_save($term);
+            $county = taxonomy_get_term_by_name($element->county);
+          }
           $edition = taxonomy_get_term_by_name($element->edition);
+
+          if (empty($edition)) {
+            $term = (object) ['vid' => '11', 'name' => $element->edition];
+            taxonomy_term_save($term);
+            $county = taxonomy_get_term_by_name($element->edition);
+          }
+
           $charge = isset($element->charge)? $element->charge: $element->charge;
           $created = strtotime($element->pubdate);
           $node = [

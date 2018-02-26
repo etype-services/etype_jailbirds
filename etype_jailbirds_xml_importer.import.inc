@@ -71,6 +71,8 @@ function etype_jailbirds_xml_importer_import() {
     $contents = ftp_nlist($conn_id, "./clients/BIRD/AAincoming");
     $import_file_array = preg_grep("/\.json/", $contents);
 
+    var_dump($import_file_array);
+
     // if there are import files
     if (count($import_file_array) > 0) {
 

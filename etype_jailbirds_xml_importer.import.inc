@@ -70,7 +70,7 @@ function etype_jailbirds_xml_importer_import() {
 
   if ($login_result === true) {
 
-    $contents = ftp_nlist($conn_id, "clients/BIRD/AAincoming");
+    $contents = ftp_nlist($conn_id, "/clients/BIRD/AAincoming");
 
     var_dump($contents);
     exit;

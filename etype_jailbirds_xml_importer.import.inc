@@ -57,7 +57,7 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
 function etype_jailbirds_xml_importer_import() {
 
   global $user;
-  set_time_limit ( 300 );
+  // set_time_limit ( 300 );
 
   $ftp_server="104.155.211.165";
   $ftp_user_name="MGreene";

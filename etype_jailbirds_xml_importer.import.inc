@@ -60,16 +60,22 @@ function etype_jailbirds_xml_importer_import() {
 
   // Import URL
   $base_import_url = 'http://archives.etypeservices.com/OKJAILBIRDS/';
-  $import_file_array = ['okj_import-1801241046.xml'];
+  $import_file_array = ['okj_import-1802220850.json'];
 
+  // if there are import files
   if (count($import_file_array) > 0) {
 
     $i = 0;
     foreach ($import_file_array as $file) {
 
-
-      /* Copy Zip file from url */
       $import_file = $base_import_url . trim($file);
+
+      $json_file = file_get_contents($import_file);
+      // convert the string to a json object
+      $data = json_decode($json_file);
+
+      var_dump($data);
+      exit;
 
       /* Loop over found files and do the extraction */
       if (!empty($import_file)) {

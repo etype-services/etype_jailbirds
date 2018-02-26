@@ -117,6 +117,13 @@ function etype_jailbirds_xml_importer_import() {
 
             $foto = str_replace('\\', "");
 
+            if (ftp_get($conn_id, '/tmp/$foto', $foto, FTP_BINARY)) {
+              echo "Se ha guardado satisfactoriamente\n";
+            } else {
+              echo "Ha habido un problema\n";
+            }
+            exit;
+
             $charge = isset($element->charge)? $element->charge: $element->charge;
             $created = strtotime($element->pubdate);
             $node = [
@@ -130,8 +137,6 @@ function etype_jailbirds_xml_importer_import() {
               'field_guid' => $element->guid,
               'image' => file($foto),
             ];
-            var_dump($node);
-            exit;
             $values['created'] = $created;
             etype_jailbirds_xml_importer_entity_create($node, $values);
             $i++;

@@ -65,6 +65,15 @@ function etype_jailbirds_xml_importer_import() {
   // if there are import files
   if (count($import_file_array) > 0) {
 
+    $ftp_server="104.155.211.165";
+    $ftp_user_name="OKJailbirds_XML";
+    $ftp_user_pass="OKjailXML321#";
+    $conn_id = ftp_connect($ftp_server);
+    $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+
+    var_dump($login_result);
+    exit;
+
     $i = 0;
     foreach ($import_file_array as $file) {
 

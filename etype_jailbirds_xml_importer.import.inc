@@ -116,8 +116,8 @@ function etype_jailbirds_xml_importer_import() {
             'field_booked_date' => $BookedDate,
             'field_released_date' => $ReleasedDate,
             'field_charge' => $charge,
-            //'field_county' => $county,
-            'field_edition' => $edition,
+            'field_county' => $county['tid'],
+            'field_edition' => $edition['tid'],
             'field_guid' => $element->guid,
             // 'image' => ['path' => $element->foto, 'name' => $element->lname . $element->fname . $created]
           ];

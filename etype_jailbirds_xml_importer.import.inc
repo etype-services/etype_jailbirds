@@ -79,10 +79,14 @@ function etype_jailbirds_xml_importer_import() {
       $i = 0;
 
       foreach ($import_file_array as $file) {
-        $json_file = file_get_contents($file);
-        var_dump($json_file);
+
+        ob_start();
+        ftp_get($conn_id, "php://output", './clients/BIRD/AAincoming' . $file, FTP_BINARY);
+        $json = ob_get_contents();
+        ob_end_clean();
+
         // convert the string to a json object
-        $data = json_decode($json_file);
+        $data = json_decode($json);
         /* Loop over found files and do the extraction */
         if (!empty($data)) {
 

@@ -94,18 +94,18 @@ function etype_jailbirds_xml_importer_import() {
           $tmp = $element->ReleasedDate;
           empty($tmp)? $ReleasedDate = 0: $ReleasedDate = strtotime($tmp);
 
-          $county = taxonomy_get_term_by_name($element->county);
-          if (empty($county)) {
-            $term = (object) ['vid' => '10', 'name' => $element->county];
-            taxonomy_term_save($term);
-            $county = taxonomy_get_term_by_name($element->county);
-          }
           $edition = taxonomy_get_term_by_name($element->edition);
-
           if (empty($edition)) {
-            $term = (object) ['vid' => '11', 'name' => $element->edition];
+            $term = (object) ['vid' => '10', 'name' => $element->edition];
             taxonomy_term_save($term);
             $county = taxonomy_get_term_by_name($element->edition);
+          }
+
+          $county = taxonomy_get_term_by_name($element->county);
+          if (empty($county)) {
+            $term = (object) ['vid' => '11', 'name' => $element->county];
+            taxonomy_term_save($term);
+            $county = taxonomy_get_term_by_name($element->county);
           }
 
           $charge = isset($element->charge)? $element->charge: $element->charge;

@@ -80,6 +80,7 @@ function etype_jailbirds_xml_importer_import() {
 
       foreach ($import_file_array as $file) {
         $json_file = file_get_contents($file);
+        var_dump($json_file);
         // convert the string to a json object
         $data = json_decode($json_file);
         /* Loop over found files and do the extraction */

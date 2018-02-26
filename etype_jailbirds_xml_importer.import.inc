@@ -119,18 +119,11 @@ function etype_jailbirds_xml_importer_import() {
               $county = taxonomy_get_term_by_name($element->county, 'county');
             }
 
-            $foto = str_replace('\\\\', "", $element->foto);
             $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
 
-            echo $foto;
-            $foto_contents = ftp_nlist($conn_id, "./clients/BIRD/AAincoming");
-
-            if (ftp_get($conn_id, '/tmp/$foto', $foto, FTP_BINARY)) {
-              echo "Se ha guardado satisfactoriamente\n";
-            } else {
-              echo "Ha habido un problema\n";
+            if (!ftp_get($conn_id, '/tmp/$foto', $foto, FTP_BINARY)) {
+              watchdog('etype_jailbirds_xml', "eType XML Importer could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
             }
-            exit;
 
             $charge = isset($element->charge)? $element->charge: $element->charge;
             $created = strtotime($element->pubdate);

@@ -98,7 +98,7 @@ function etype_jailbirds_xml_importer_import() {
           if (empty($edition)) {
             $term = (object) ['vid' => '10', 'name' => $element->edition];
             taxonomy_term_save($term);
-            $county = taxonomy_get_term_by_name($element->edition);
+            $edition = taxonomy_get_term_by_name($element->edition);
           }
 
           $county = taxonomy_get_term_by_name($element->county);

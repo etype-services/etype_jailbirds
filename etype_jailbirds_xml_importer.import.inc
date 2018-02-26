@@ -115,7 +115,9 @@ function etype_jailbirds_xml_importer_import() {
               $county = taxonomy_get_term_by_name($element->county, 'county');
             }
 
-            $foto = str_replace('\\', "");
+            $foto = str_replace('\\\\', "");
+
+            echo $foto;
 
             if (ftp_get($conn_id, '/tmp/$foto', $foto, FTP_BINARY)) {
               echo "Se ha guardado satisfactoriamente\n";

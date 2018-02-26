@@ -134,6 +134,7 @@ function etype_jailbirds_xml_importer_import() {
               'field_guid' => $element->guid,
               'image' => ['name' => $fullname, 'path' => '/tmp/foto'],
             ];
+            var_dump($node);
             $values['created'] = $created;
             etype_jailbirds_xml_importer_entity_create($node, $values);
             $i++;

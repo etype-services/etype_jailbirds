@@ -74,11 +74,8 @@ function etype_jailbirds_xml_importer_import() {
       // convert the string to a json object
       $data = json_decode($json_file);
 
-      var_dump($data);
-      exit;
-
       /* Loop over found files and do the extraction */
-      if (!empty($import_file)) {
+      if (!empty($data)) {
 
         $values = [
           'type' => 'fotoname',
@@ -88,44 +85,40 @@ function etype_jailbirds_xml_importer_import() {
           'promote' => 0,
           'language' => LANGUAGE_NONE,
         ];
+        $i = 0;
 
-        $xml = file_get_contents($import_file);
-        if ($xml !== FALSE) {
-          /* parse xml in each file */
-          $obj = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
-          if (sizeof($obj) > 0) {
-            // var_dump($obj);
-            /* loop over items in imported file */
-            foreach ($obj as $element) {
-              $tmp = (string) $element->dob;
-              $dob = strtotime($tmp);
-              $tmp = (string) $element->BookedDate;
-              empty($tmp)? $BookedDate = 0: $BookedDate = strtotime($tmp);
-              $tmp = (string) $element->ReleasedDate;
-              empty($tmp)? $ReleasedDate = 0: $ReleasedDate = strtotime($tmp);
-              $county = taxonomy_get_term_by_name($element->county);
-              $edition = taxonomy_get_term_by_name($element->edition);
-              $created = strtotime($element->pubdate);
-              $node = [
-                'title' => (string) $element->fname . ' ' . (string) $element->lname,
-                'field_name' => (string) $element->name,
-                'field_sex' => (string) $element->Sex,
-                'field_race' => (string) $element->Race,
-                'field_date_of_birth' => $dob,
-                'field_address' => (string) $element->Address,
-                'field_booked_date' => $BookedDate,
-                'field_released_date' => $ReleasedDate,
-                'field_charge' => (string) $element->charges,
-                'field_county' => key($county),
-                'field_edition' => key($edition),
-                'field_guid' => (string) $element->guid,
-                // 'image' => ['path' => $element->foto, 'name' => $element->lname . $element->fname . $created]
-              ];
-              $values['created'] = $created;
-              etype_jailbirds_xml_importer_entity_create($node, $values);
-              $i++;
-            }
-          }
+        foreach ($data as $k => $v) {
+
+          echo "$k: $v";
+          continue;
+
+          $tmp = (string) $element->dob;
+          $dob = strtotime($tmp);
+          $tmp = (string) $element->BookedDate;
+          empty($tmp)? $BookedDate = 0: $BookedDate = strtotime($tmp);
+          $tmp = (string) $element->ReleasedDate;
+          empty($tmp)? $ReleasedDate = 0: $ReleasedDate = strtotime($tmp);
+          $county = taxonomy_get_term_by_name($element->county);
+          $edition = taxonomy_get_term_by_name($element->edition);
+          $created = strtotime($element->pubdate);
+          $node = [
+            'title' => (string) $element->fname . ' ' . (string) $element->lname,
+            'field_name' => (string) $element->name,
+            'field_sex' => (string) $element->Sex,
+            'field_race' => (string) $element->Race,
+            'field_date_of_birth' => $dob,
+            'field_address' => (string) $element->Address,
+            'field_booked_date' => $BookedDate,
+            'field_released_date' => $ReleasedDate,
+            'field_charge' => (string) $element->charges,
+            'field_county' => key($county),
+            'field_edition' => key($edition),
+            'field_guid' => (string) $element->guid,
+            // 'image' => ['path' => $element->foto, 'name' => $element->lname . $element->fname . $created]
+          ];
+          $values['created'] = $created;
+          // etype_jailbirds_xml_importer_entity_create($node, $values);
+          $i++;
         }
       }
     }

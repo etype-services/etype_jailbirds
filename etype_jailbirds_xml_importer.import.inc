@@ -96,14 +96,14 @@ function etype_jailbirds_xml_importer_import() {
 
           $edition = taxonomy_get_term_by_name($element->edition);
           if (empty($edition)) {
-            $term = (object) ['vid' => '10', 'name' => $element->edition];
+            $term = (object) ['vid' => '10', 'name' => $element->edition, 'vocabulary_machine_id' => 'edition'];
             taxonomy_term_save($term);
             $edition = taxonomy_get_term_by_name($element->edition);
           }
 
           $county = taxonomy_get_term_by_name($element->county);
           if (empty($county)) {
-            $term = (object) ['vid' => '11', 'name' => $element->county];
+            $term = (object) ['vid' => '11', 'name' => $element->county, 'vocabulary_machine_id' => 'county']];
             taxonomy_term_save($term);
             $county = taxonomy_get_term_by_name($element->county);
           }

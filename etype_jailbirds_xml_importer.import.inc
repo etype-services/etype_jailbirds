@@ -89,7 +89,8 @@ function etype_jailbirds_xml_importer_import() {
 
         foreach ($data as $k => $v) {
 
-          echo "$k: $v";
+          var_dump($k);
+          var_dump($v);
           continue;
 
           $tmp = (string) $element->dob;

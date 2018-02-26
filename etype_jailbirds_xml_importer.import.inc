@@ -62,17 +62,23 @@ function etype_jailbirds_xml_importer_import() {
   $base_import_url = 'http://archives.etypeservices.com/OKJAILBIRDS/';
   $import_file_array = ['okj_import-1802220850.json'];
 
-  // if there are import files
-  if (count($import_file_array) > 0) {
+  $ftp_server="104.155.211.165";
+  $ftp_user_name="MGreene";
+  $ftp_user_pass="M@etype1#";
+  $conn_id = ftp_connect($ftp_server);
+  $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-    $ftp_server="104.155.211.165";
-    $ftp_user_name="OKJailbirds_XML";
-    $ftp_user_pass="OKjailXML321#";
-    $conn_id = ftp_connect($ftp_server);
-    $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
+  echo $login_result;
 
-    if ($login_result === true) {
+  exit;
+
+  if ($login_result === true) {
+
+    // if there are import files
+    if (count($import_file_array) > 0) {
+
       $i = 0;
+
       foreach ($import_file_array as $file) {
 
         $import_file = $base_import_url . trim($file);
@@ -145,11 +151,10 @@ function etype_jailbirds_xml_importer_import() {
           }
         }
       }
-      watchdog('etype_jailbirds_xml', "eType XML Importer imported %num stories.", $variables = ['%num' => $i], $severity = WATCHDOG_NOTICE);
-    } else {
-      watchdog('etype_jailbirds_xml', "eType XML Importer could not log in to the FTP server at $ftp_server.", $variables = [], $severity = WATCHDOG_ERROR);
     }
 
-
+    watchdog('etype_jailbirds_xml', "eType XML Importer imported %num stories.", $variables = ['%num' => $i], $severity = WATCHDOG_NOTICE);
+  } else {
+    watchdog('etype_jailbirds_xml', "eType XML Importer could not log in to the FTP server at $ftp_server.", $variables = [], $severity = WATCHDOG_ERROR);
   }
 }

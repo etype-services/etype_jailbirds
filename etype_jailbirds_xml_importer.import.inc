@@ -115,7 +115,7 @@ function etype_jailbirds_xml_importer_import() {
               $county = taxonomy_get_term_by_name($element->county, 'county');
             }
 
-            $foto = str_replace('\\\\', "");
+            $foto = str_replace('\\\\', "", $element->foto);
 
             echo $foto;
 

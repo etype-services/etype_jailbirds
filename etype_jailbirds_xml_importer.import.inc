@@ -57,10 +57,7 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
 function etype_jailbirds_xml_importer_import() {
 
   global $user;
-
-  // Import URL
-  $base_import_url = 'http://archives.etypeservices.com/OKJAILBIRDS/';
-  $import_file_array = ['okj_import-1802220850.json'];
+  set_time_limit ( 300 );
 
   $ftp_server="104.155.211.165";
   $ftp_user_name="MGreene";
@@ -80,9 +77,7 @@ function etype_jailbirds_xml_importer_import() {
       $i = 0;
 
       foreach ($import_file_array as $file) {
-
-        $import_file = $base_import_url . trim($file);
-        $json_file = file_get_contents($import_file);
+        $json_file = file_get_contents($file);
         // convert the string to a json object
         $data = json_decode($json_file);
         /* Loop over found files and do the extraction */
@@ -121,14 +116,15 @@ function etype_jailbirds_xml_importer_import() {
 
             $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
 
-            if (!ftp_get($conn_id, '/tmp/$foto', $foto, FTP_BINARY)) {
+            if (!ftp_get($conn_id, '/tmp/foto', $foto, FTP_BINARY)) {
               watchdog('etype_jailbirds_xml', "eType XML Importer could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
             }
 
             $charge = isset($element->charge)? $element->charge: $element->charge;
             $created = strtotime($element->pubdate);
+            $fullname = $element->fname . ' ' . (string) $element->lname;
             $node = [
-              'title' => $element->fname . ' ' . (string) $element->lname,
+              'title' => $fullname,
               'field_name' => $element->name,
               'field_booked_date' => $BookedDate,
               'field_released_date' => $ReleasedDate,
@@ -136,7 +132,7 @@ function etype_jailbirds_xml_importer_import() {
               'field_county' => $county['tid'],
               'field_edition' => $edition['tid'],
               'field_guid' => $element->guid,
-              'image' => file($foto),
+              'image' => ['name' => $fullname, 'path' => '/tmp/foto'],
             ];
             $values['created'] = $created;
             etype_jailbirds_xml_importer_entity_create($node, $values);

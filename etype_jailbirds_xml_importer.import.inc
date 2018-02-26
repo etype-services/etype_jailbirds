@@ -71,76 +71,78 @@ function etype_jailbirds_xml_importer_import() {
     $conn_id = ftp_connect($ftp_server);
     $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
-    var_dump($login_result);
-    exit;
+    if ($login_result === true) {
+      $i = 0;
+      foreach ($import_file_array as $file) {
 
-    $i = 0;
-    foreach ($import_file_array as $file) {
+        $import_file = $base_import_url . trim($file);
 
-      $import_file = $base_import_url . trim($file);
+        $json_file = file_get_contents($import_file);
+        // convert the string to a json object
+        $data = json_decode($json_file);
 
-      $json_file = file_get_contents($import_file);
-      // convert the string to a json object
-      $data = json_decode($json_file);
+        /* Loop over found files and do the extraction */
+        if (!empty($data)) {
 
-      /* Loop over found files and do the extraction */
-      if (!empty($data)) {
-
-        $values = [
-          'type' => 'fotoname',
-          'uid' => $user->uid,
-          'status' => 0,
-          'comment' => 0,
-          'promote' => 0,
-          'language' => LANGUAGE_NONE,
-        ];
-        $i = 0;
-
-        foreach ($data as $k => $element) {
-
-          $tmp = $element->BookedDate;
-          empty($tmp)? $BookedDate = 0: $BookedDate = strtotime($tmp);
-          $tmp = $element->ReleasedDate;
-          empty($tmp)? $ReleasedDate = 0: $ReleasedDate = strtotime($tmp);
-
-          $edition = taxonomy_get_term_by_name($element->edition, 'edition');
-          if (empty($edition)) {
-            $term = (object) ['vid' => '10', 'name' => $element->edition, 'vocabulary_machine_id' => 'edition'];
-            taxonomy_term_save($term);
-            $edition = taxonomy_get_term_by_name($element->edition, 'edition');
-          }
-
-          $county = taxonomy_get_term_by_name($element->county, 'county');
-          if (empty($county)) {
-            $term = (object) ['vid' => '11', 'name' => $element->county, 'vocabulary_machine_id' => 'county'];
-            taxonomy_term_save($term);
-            $county = taxonomy_get_term_by_name($element->county, 'county');
-          }
-
-          $foto = str_replace('\\', "");
-
-          $charge = isset($element->charge)? $element->charge: $element->charge;
-          $created = strtotime($element->pubdate);
-          $node = [
-            'title' => $element->fname . ' ' . (string) $element->lname,
-            'field_name' => $element->name,
-            'field_booked_date' => $BookedDate,
-            'field_released_date' => $ReleasedDate,
-            'field_charge' => $charge,
-            'field_county' => $county['tid'],
-            'field_edition' => $edition['tid'],
-            'field_guid' => $element->guid,
-            'image' => file($foto),
+          $values = [
+            'type' => 'fotoname',
+            'uid' => $user->uid,
+            'status' => 0,
+            'comment' => 0,
+            'promote' => 0,
+            'language' => LANGUAGE_NONE,
           ];
-          var_dump($node);
-          exit;
-          $values['created'] = $created;
-          etype_jailbirds_xml_importer_entity_create($node, $values);
-          $i++;
+          $i = 0;
+
+          foreach ($data as $k => $element) {
+
+            $tmp = $element->BookedDate;
+            empty($tmp)? $BookedDate = 0: $BookedDate = strtotime($tmp);
+            $tmp = $element->ReleasedDate;
+            empty($tmp)? $ReleasedDate = 0: $ReleasedDate = strtotime($tmp);
+
+            $edition = taxonomy_get_term_by_name($element->edition, 'edition');
+            if (empty($edition)) {
+              $term = (object) ['vid' => '10', 'name' => $element->edition, 'vocabulary_machine_id' => 'edition'];
+              taxonomy_term_save($term);
+              $edition = taxonomy_get_term_by_name($element->edition, 'edition');
+            }
+
+            $county = taxonomy_get_term_by_name($element->county, 'county');
+            if (empty($county)) {
+              $term = (object) ['vid' => '11', 'name' => $element->county, 'vocabulary_machine_id' => 'county'];
+              taxonomy_term_save($term);
+              $county = taxonomy_get_term_by_name($element->county, 'county');
+            }
+
+            $foto = str_replace('\\', "");
+
+            $charge = isset($element->charge)? $element->charge: $element->charge;
+            $created = strtotime($element->pubdate);
+            $node = [
+              'title' => $element->fname . ' ' . (string) $element->lname,
+              'field_name' => $element->name,
+              'field_booked_date' => $BookedDate,
+              'field_released_date' => $ReleasedDate,
+              'field_charge' => $charge,
+              'field_county' => $county['tid'],
+              'field_edition' => $edition['tid'],
+              'field_guid' => $element->guid,
+              'image' => file($foto),
+            ];
+            var_dump($node);
+            exit;
+            $values['created'] = $created;
+            etype_jailbirds_xml_importer_entity_create($node, $values);
+            $i++;
+          }
         }
       }
+      watchdog('etype_jailbirds_xml', "eType XML Importer imported %num stories.", $variables = ['%num' => $i], $severity = WATCHDOG_NOTICE);
+    } else {
+      watchdog('etype_jailbirds_xml', "eType XML Importer could not log in to the FTP server at $ftp_server.", $variables = [], $severity = WATCHDOG_ERROR);
     }
 
-    watchdog('etype', "eType XML Importer imported %num stories.", $variables = ['%num' => $i], $severity = WATCHDOG_NOTICE);
+
   }
 }

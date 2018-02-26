@@ -103,7 +103,7 @@ function etype_jailbirds_xml_importer_import() {
 
           $county = taxonomy_get_term_by_name($element->county);
           if (empty($county)) {
-            $term = (object) ['vid' => '11', 'name' => $element->county, 'vocabulary_machine_id' => 'county']];
+            $term = (object) ['vid' => '11', 'name' => $element->county, 'vocabulary_machine_id' => 'county'];
             taxonomy_term_save($term);
             $county = taxonomy_get_term_by_name($element->county);
           }

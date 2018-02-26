@@ -137,6 +137,7 @@ function etype_jailbirds_xml_importer_import() {
             $values['created'] = $created;
             etype_jailbirds_xml_importer_entity_create($node, $values);
             $i++;
+            exit;
           }
         }
       }

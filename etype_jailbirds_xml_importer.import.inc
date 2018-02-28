@@ -85,12 +85,13 @@ function etype_jailbirds_xml_importer_import() {
         $json = ob_get_contents();
         ob_end_clean();
 
+        var_dump($json);
+        exit;
+
         // convert the string to a json object
         $data = json_decode($json);
         /* Loop over found files and do the extraction */
         if (!empty($data)) {
-
-          var_dump($data);
 
           $values = [
             'type' => 'fotoname',

@@ -22,10 +22,10 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
 
         case 'image':
 
-          if ($tmp = file_get_contents($v['path'])) {
-            $file = file_save_data($tmp, 'public://' . $v['name']);
-            echo $file;
-          }
+          //if ($tmp = file_get_contents($v['path'])) {
+          //  $file = file_save_data($tmp, 'public://' . $v['name']);
+          //  echo $file;
+          //}
 
           $files = [];
           //$file = file_save_data(file_get_contents($v['path']), 'public://' . $v['name']);

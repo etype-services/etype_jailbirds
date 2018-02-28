@@ -143,7 +143,7 @@ function etype_jailbirds_xml_importer_import() {
             $charge = isset($element->charge)? $element->charge: $element->charge;
             $created = strtotime($element->pubdate);
             $fullname = $element->fname . ' ' . $element->lname;
-            $image_name = $element->fname . $element->lname . '.jpg';
+            $image_name = $element->fname . $element->lname . '_' . $created . '.jpg';
             $node = [
               'title' => $fullname,
               'field_name' => $element->name,

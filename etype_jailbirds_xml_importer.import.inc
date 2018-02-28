@@ -81,7 +81,7 @@ function etype_jailbirds_xml_importer_import() {
       foreach ($import_file_array as $file) {
 
         ob_start();
-        ftp_get($conn_id, "php://output", './clients/BIRD/AAincoming/' . $file);
+        ftp_get($conn_id, "php://output", './clients/BIRD/AAincoming/' . $file,FTP_ASCII);
         $json = ob_get_contents();
         ob_end_clean();
 

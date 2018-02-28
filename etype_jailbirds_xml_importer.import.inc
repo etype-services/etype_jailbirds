@@ -24,6 +24,17 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
 
           if ($tmp = file_get_contents($v['path'])) {
             $file = file_save_data($tmp, 'public://' . $v['name']);
+            $file->display = '1';
+            $file->description = $v['name'];
+            if (module_exists('image_field_caption')) {
+              $file->image_field_caption = [
+                'value' => $v['name'],
+               'format' => 'plain_text',
+            ];
+            } else {
+              $file->title = $v['name'];
+            }
+            $file= file_save($file);
           }
 
           $files = [];

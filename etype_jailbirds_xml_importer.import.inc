@@ -127,8 +127,9 @@ function etype_jailbirds_xml_importer_import() {
 
             $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
 
+            echo $foto;
             $rand = substr(md5(rand()), 0, 7);
-            if (!ftp_get($conn_id, "/tmp/$rand", $foto, FTP_BINARY)) {
+            if (!ftp_get($conn_id, "/tmp/foto$rand.jpg", $foto, FTP_BINARY)) {
               watchdog('etype_jailbirds_xml', "eType XML Importer could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
             }
 

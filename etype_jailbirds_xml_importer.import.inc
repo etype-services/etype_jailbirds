@@ -21,24 +21,29 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
           break;
 
         case 'image':
+
+          if (file_get_contents($v['path'])) {
+            echo 'yes';
+          }
+
           $files = [];
-          $file = file_save_data(file_get_contents($v['path']), 'public://' . $v['name']);
-          $file->display = '1';
-          $file->description = $v['name'];
+          //$file = file_save_data(file_get_contents($v['path']), 'public://' . $v['name']);
+         // $file->display = '1';
+         // $file->description = $v['name'];
           /* Set caption if image field caption enabled, otherwise set title */
-          if (module_exists('image_field_caption')) {
-            $file->image_field_caption = [
-              'value' => $v['name'],
-              'format' => 'plain_text',
-            ];
-          }
-          else {
-            $file->title = $v['name'];
-          }
-          $file = file_save($file);
-          $file = (array) $file;
-          $files[] = $file;
-          $wrapper->field_image->set($files);
+          //if (module_exists('image_field_caption')) {
+          //  $file->image_field_caption = [
+          //    'value' => $v['name'],
+           //   'format' => 'plain_text',
+           // ];
+          //}
+          //else {
+          //  $file->title = $v['name'];
+          //}
+          //$file = file_save($file);
+          //$file = (array) $file;
+          //$files[] = $file;
+          // $wrapper->field_image->set($files);
           break;
 
         default:

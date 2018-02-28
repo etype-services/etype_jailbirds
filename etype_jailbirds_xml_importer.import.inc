@@ -129,7 +129,8 @@ function etype_jailbirds_xml_importer_import() {
 
             echo $foto;
             $rand = substr(md5(rand()), 0, 7);
-            if (!ftp_get($conn_id, "/tmp/foto$rand.jpg", $foto, FTP_BINARY)) {
+            $local_file = "/tmp/foto$rand.jpg";
+            if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
               watchdog('etype_jailbirds_xml', "eType XML Importer could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
             }
 
@@ -145,7 +146,7 @@ function etype_jailbirds_xml_importer_import() {
               'field_county' => $county['tid'],
               'field_edition' => $edition['tid'],
               'field_guid' => $element->guid,
-              'image' => ['name' => $fullname, 'path' => "/tmp/$rand"],
+              'image' => ['name' => $fullname, 'path' => $local_file],
             ];
             var_dump($node);
             $values['created'] = $created;

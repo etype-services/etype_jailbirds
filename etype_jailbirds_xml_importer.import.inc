@@ -144,7 +144,7 @@ function etype_jailbirds_xml_importer_import() {
               'field_county' => $county['tid'],
               'field_edition' => $edition['tid'],
               'field_guid' => $element->guid,
-              'image' => ['name' => $fullname, 'path' => '/tmp/foto'],
+              'image' => ['name' => $fullname, 'path' => "/tmp/$rand"],
             ];
             var_dump($node);
             $values['created'] = $created;

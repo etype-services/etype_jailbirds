@@ -34,8 +34,9 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
             } else {
               $file->title = $v['name'];
             }
-            $file= file_save($file);
-            $wrapper->field_image->set((array) $file);
+            $file = file_save($file);
+            $file = (array) $file;
+            $wrapper->field_image->set($file);
           }
 
           $files = [];

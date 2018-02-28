@@ -22,10 +22,9 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
 
         case 'image':
 
-          //if ($tmp = file_get_contents($v['path'])) {
-          //  $file = file_save_data($tmp, 'public://' . $v['name']);
-          //  echo $file;
-          //}
+          if ($tmp = file_get_contents($v['path'])) {
+            $file = file_save_data($tmp, 'public://' . $v['name']);
+          }
 
           $files = [];
           //$file = file_save_data(file_get_contents($v['path']), 'public://' . $v['name']);
@@ -71,6 +70,15 @@ function etype_jailbirds_xml_importer_import() {
   $conn_id = ftp_connect($ftp_server);
   $login_result = ftp_login($conn_id, $ftp_user_name, $ftp_user_pass);
 
+  $values = [
+    'type' => 'fotoname',
+    'uid' => $user->uid,
+    'status' => 1,
+    'comment' => 0,
+    'promote' => 0,
+    'language' => LANGUAGE_NONE,
+  ];
+
   if ($login_result === true) {
 
     ftp_pasv($conn_id, true);
@@ -100,14 +108,6 @@ function etype_jailbirds_xml_importer_import() {
           // convert the string to a json object
           $data = json_decode($json);
 
-          $values = [
-            'type' => 'fotoname',
-            'uid' => $user->uid,
-            'status' => 0,
-            'comment' => 0,
-            'promote' => 0,
-            'language' => LANGUAGE_NONE,
-          ];
           $i = 0;
 
           foreach ($data as $k => $element) {

@@ -133,6 +133,8 @@ function etype_jailbirds_importer_import()
                         empty($tmp) ? $ReleasedDate = 0 : $ReleasedDate = strtotime($tmp);
 
                         $edition = taxonomy_get_term_by_name($element->edition, 'edition');
+                        var_dump($edition);
+                        exit;
                         if (empty($edition)) {
                             $term = (object)['vid' => '10', 'name' => $element->edition, 'vocabulary_machine_id' => 'edition'];
                             taxonomy_term_save($term);

@@ -75,7 +75,7 @@ function etype_jailbirds_importer_import()
 {
 
     global $user;
-    // set_time_limit ( 300 );
+    set_time_limit ( 300 );
 
     $ftp_server = "104.155.211.165";
     $ftp_user_name = "MGreene";
@@ -185,11 +185,10 @@ function etype_jailbirds_importer_import()
                             'field_guid' => $element->guid,
                             'image' => ['name' => 'fotos/' . $element->pubdate . '/' . $image_name, 'path' => $local_file],
                         ];
-                        var_dump($node);
+                        // var_dump($node);
                         $values['created'] = $created;
                         etype_jailbirds_importer_entity_create($node, $values);
                         $i++;
-                        exit;
                     }
                 }
             }

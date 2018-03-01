@@ -21,6 +21,22 @@ function etype_jailbirds_importer_entity_create($item = [], $values = [], $entit
                     $wrapper->$k->set($v);
                     break;
 
+                case 'field_county':
+                    if (count($v) > 0) {
+                        foreach ($v as $value) {
+                            $wrapper->$k->set($value);
+                        }
+                    }
+                    break;
+
+                case 'field_edition':
+                    if (count($v) > 0) {
+                        foreach ($v as $value) {
+                            $wrapper->$k->set($value);
+                        }
+                    }
+                    break;
+
                 case 'image':
 
                     if ($tmp = file_get_contents($v['path'])) {
@@ -40,24 +56,6 @@ function etype_jailbirds_importer_entity_create($item = [], $values = [], $entit
                         $wrapper->field_image->set($file);
                     }
 
-                    $files = [];
-                    //$file = file_save_data(file_get_contents($v['path']), 'public://' . $v['name']);
-                    // $file->display = '1';
-                    // $file->description = $v['name'];
-                    /* Set caption if image field caption enabled, otherwise set title */
-                    //if (module_exists('image_field_caption')) {
-                    //  $file->image_field_caption = [
-                    //    'value' => $v['name'],
-                    //   'format' => 'plain_text',
-                    // ];
-                    //}
-                    //else {
-                    //  $file->title = $v['name'];
-                    //}
-                    //$file = file_save($file);
-                    //$file = (array) $file;
-                    //$files[] = $file;
-                    // $wrapper->field_image->set($files);
                     break;
 
                 default:
@@ -141,7 +139,7 @@ function etype_jailbirds_importer_import()
                         }
                         $edition_arr = [];
                         foreach ($edition as $key=>$value) {
-                            $edition_arr[$key] = $key;
+                            $edition_arr[] = $key;
                         }
 
                         /* COUNTY */
@@ -153,7 +151,7 @@ function etype_jailbirds_importer_import()
                         }
                         $county_arr = [];
                         foreach ($county as $key=>$value) {
-                            $county_arr[$key] = $key;
+                            $county_arr[] = $key;
                         }
 
                         /* FOTO */

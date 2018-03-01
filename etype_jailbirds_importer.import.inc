@@ -159,7 +159,7 @@ function etype_jailbirds_importer_import()
                         $created = strtotime($element->pubdate);
 
                         // make foto carpeta por fecha
-                        drupal_mkdir('public://fotos/' . $element->pubdate);
+                        drupal_mkdir('public://fotos/' . $element->pubdate, '0777');
 
                         $fullname = $element->fname . ' ' . $element->lname;
                         $image_name = $element->fname . $element->lname . '_' . $created . '.jpg';

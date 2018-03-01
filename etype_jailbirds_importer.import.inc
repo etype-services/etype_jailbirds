@@ -158,9 +158,8 @@ function etype_jailbirds_importer_import()
                         $charge = isset($element->charge) ? $element->charge : $element->charge;
                         $created = strtotime($element->pubdate);
 
-                        // make foto carpeta
+                        // make foto carpeta por fecha
                         drupal_mkdir('public://fotos/' . $element->pubdate);
-                        exit;
 
                         $fullname = $element->fname . ' ' . $element->lname;
                         $image_name = $element->fname . $element->lname . '_' . $created . '.jpg';
@@ -173,7 +172,7 @@ function etype_jailbirds_importer_import()
                             'field_county' => $county['tid'],
                             'field_edition' => $edition['tid'],
                             'field_guid' => $element->guid,
-                            'image' => ['name' => $image_name, 'path' => $local_file],
+                            'image' => ['name' => 'public://fotos/' . $element->pubdate . '/' . $image_name, 'path' => $local_file],
                         ];
                         var_dump($node);
                         $values['created'] = $created;

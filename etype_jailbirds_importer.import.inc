@@ -172,7 +172,7 @@ function etype_jailbirds_importer_import()
                             'field_county' => $county['tid'],
                             'field_edition' => $edition['tid'],
                             'field_guid' => $element->guid,
-                            'image' => ['name' => 'public://fotos/' . $element->pubdate . '/' . $image_name, 'path' => $local_file],
+                            'image' => ['name' => 'fotos/' . $element->pubdate . '/' . $image_name, 'path' => $local_file],
                         ];
                         var_dump($node);
                         $values['created'] = $created;

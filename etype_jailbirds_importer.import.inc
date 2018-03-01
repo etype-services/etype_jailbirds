@@ -7,7 +7,7 @@
  * @param array $values
  * @param string $entity_type
  */
-function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $entity_type = 'node') {
+function etype_jailbirds_importer_entity_create($item = [], $values = [], $entity_type = 'node') {
 
   $entity = entity_create($entity_type, $values);
   $wrapper = entity_metadata_wrapper($entity_type, $entity);
@@ -70,9 +70,9 @@ function etype_jailbirds_xml_importer_entity_create($item = [], $values = [], $e
 }
 
 /**
- * Parse XML Files
+ * Parse JSON Files
  */
-function etype_jailbirds_xml_importer_import() {
+function etype_jailbirds_importer_import() {
 
   global $user;
   // set_time_limit ( 300 );
@@ -150,7 +150,7 @@ function etype_jailbirds_xml_importer_import() {
             $rand = substr(md5(rand()), 0, 7);
             $local_file = "/tmp/foto$rand.jpg";
             if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
-              watchdog('etype_jailbirds_xml', "eType XML Importer could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
+              watchdog('etype_jailbirds_importer', "eType Importer could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
             }
 
             $charge = isset($element->charge)? $element->charge: $element->charge;
@@ -170,7 +170,7 @@ function etype_jailbirds_xml_importer_import() {
             ];
             var_dump($node);
             $values['created'] = $created;
-            etype_jailbirds_xml_importer_entity_create($node, $values);
+            etype_jailbirds_importer_entity_create($node, $values);
             $i++;
             exit;
           }
@@ -178,8 +178,8 @@ function etype_jailbirds_xml_importer_import() {
       }
     }
 
-    watchdog('etype_jailbirds_xml', "eType XML Importer imported %num stories.", $variables = ['%num' => $i], $severity = WATCHDOG_NOTICE);
+    watchdog('etype_jailbirds_importer', "eType Importer imported %num stories.", $variables = ['%num' => $i], $severity = WATCHDOG_NOTICE);
   } else {
-    watchdog('etype_jailbirds_xml', "eType XML Importer could not log in to the FTP server at $ftp_server.", $variables = [], $severity = WATCHDOG_ERROR);
+    watchdog('etype_jailbirds_importer', "eType Importer could not log in to the FTP server at $ftp_server.", $variables = [], $severity = WATCHDOG_ERROR);
   }
 }

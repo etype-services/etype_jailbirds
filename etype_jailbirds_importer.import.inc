@@ -141,7 +141,7 @@ function etype_jailbirds_importer_import()
                         }
                         $edition_arr = [];
                         foreach ($edition as $key=>$value) {
-                            $edition_arr[] = $key;
+                            $edition_arr[$key] = $key;
                         }
 
                         /* COUNTY */
@@ -153,7 +153,7 @@ function etype_jailbirds_importer_import()
                         }
                         $county_arr = [];
                         foreach ($county as $key=>$value) {
-                            $county_arr[] = $key;
+                            $county_arr[$key] = $key;
                         }
 
                         /* FOTO */
@@ -169,7 +169,10 @@ function etype_jailbirds_importer_import()
                         $created = strtotime($element->pubdate);
 
                         // make foto carpeta por fecha
-                        mkdir('/data/web/public/drupal/sites/okjailbirds.etypegoogle9.com/files/fotos/' . $element->pubdate, '0755');
+                        $fotopath = '/data/web/public/drupal/sites/okjailbirds.etypegoogle9.com/files/fotos/' . $element->pubdate;
+                        if (!file_exists($fotopath)) {
+                            mkdir($fotopath, '0755');
+                        }
 
                         $fullname = $element->fname . ' ' . $element->lname;
                         $image_name = $element->fname . $element->lname . '_' . $created . '.jpg';

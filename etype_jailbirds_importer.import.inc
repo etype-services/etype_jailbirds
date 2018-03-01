@@ -132,25 +132,33 @@ function etype_jailbirds_importer_import()
                         $tmp = $element->ReleasedDate;
                         empty($tmp) ? $ReleasedDate = 0 : $ReleasedDate = strtotime($tmp);
 
+                        /* EDITION */
                         $edition = taxonomy_get_term_by_name($element->edition, 'edition');
-                        var_dump($edition);
-                        exit;
                         if (empty($edition)) {
                             $term = (object)['vid' => '10', 'name' => $element->edition, 'vocabulary_machine_id' => 'edition'];
                             taxonomy_term_save($term);
                             $edition = taxonomy_get_term_by_name($element->edition, 'edition');
                         }
+                        $edition_arr = [];
+                        foreach ($edition as $key=>$value) {
+                            $edition_arr[] = $key;
+                        }
 
+                        /* COUNTY */
                         $county = taxonomy_get_term_by_name($element->county, 'county');
                         if (empty($county)) {
                             $term = (object)['vid' => '11', 'name' => $element->county, 'vocabulary_machine_id' => 'county'];
                             taxonomy_term_save($term);
                             $county = taxonomy_get_term_by_name($element->county, 'county');
                         }
+                        $county_arr = [];
+                        foreach ($county as $key=>$value) {
+                            $county_arr[] = $key;
+                        }
 
+                        /* FOTO */
                         $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
 
-                        echo $foto;
                         $rand = substr(md5(rand()), 0, 7);
                         $local_file = "/tmp/foto$rand.jpg";
                         if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
@@ -171,8 +179,8 @@ function etype_jailbirds_importer_import()
                             'field_booked_date' => $BookedDate,
                             'field_released_date' => $ReleasedDate,
                             'field_charge' => $charge,
-                            'field_county' => $county['tid'],
-                            'field_edition' => $edition['tid'],
+                            'field_county' => $county_arr,
+                            'field_edition' => $edition_arr,
                             'field_guid' => $element->guid,
                             'image' => ['name' => 'fotos/' . $element->pubdate . '/' . $image_name, 'path' => $local_file],
                         ];

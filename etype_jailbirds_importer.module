@@ -23,10 +23,28 @@ function etype_jailbirds_importer_menu() {
     'title' => 'Import OK Jailbirds JSON',
     'description' => 'OK Jailbirds JSON Importer',
     'page callback' => 'etype_jailbirds_importer_import',
-    'access arguments' => array('administer json import'),
+    // 'access arguments' => array('administer json import'),
+    'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'file' => 'etype_jailbirds_importer.import.inc'
   );
 
   return $items;
+}
+
+
+/**
+ * Cron Jobs
+ * @param $op
+ * @param null $job
+ * @return mixed
+ */
+function etype_jailbirds_importer_cronapi($op, $job = NULL) {
+    /*$items['etype_xml_importer_cron'] = array(
+        'description' => 'Import content via XML from Olive',
+        'rule' => '* * * * *',
+        'callback' => 'etype_jailbirds_importer_import',
+        'file' => 'etype_jailbirds_importer.import.inc'
+    );
+    /* return $items; */
 }

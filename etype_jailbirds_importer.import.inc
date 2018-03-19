@@ -117,7 +117,7 @@ function etype_jailbirds_importer_import() {
                 var_dump($ymd);
                 $now = new DateTime();
                 $interval = $now->diff($date);
-                echo $interval->format('%R%a días');
+                echo $interval->format('%d');
                 continue;
 
                 ob_start();

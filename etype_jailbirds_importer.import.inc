@@ -106,19 +106,19 @@ function etype_jailbirds_importer_import() {
 
             foreach ($import_file_array as $file) {
 
-                var_dump($file);
+                // check date of file
                 preg_match_all('!\d+!', $file, $matches);
-                var_dump($matches[0]);
                 $parts = str_split($matches[0][0], 2);
-                var_dump($parts);
                 $time = '20' . $parts[0] . '-' . $parts[1] . '-' . $parts[2];
                 $date = new DateTime($time);
-                $ymd = $date->format('Y-m-d');
-                var_dump($ymd);
                 $now = new DateTime();
                 $interval = $now->diff($date);
-                echo $interval->format('%d');
-                continue;
+                $int = $interval->format('%d');
+
+                // if file is more than 6 days old, do not import
+                if ($int > 6) {
+                    // continue;
+                }
 
                 ob_start();
                 ftp_get($conn_id, "php://output", './clients/BIRD/AAincoming/' . $file, FTP_ASCII);

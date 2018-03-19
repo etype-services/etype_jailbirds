@@ -106,10 +106,10 @@ function etype_jailbirds_importer_import() {
 
             foreach ($import_file_array as $file) {
 
-                print_r($file);
+                var_dump($file);
                 $buff = ftp_mdtm($conn_id, $file);
-                print_r($buff);
-                print_r(date("F d Y H:i:s.", $buff));
+                var_dump($buff);
+                var_dump(date("F d Y H:i:s.", $buff));
                 continue;
 
                 ob_start();

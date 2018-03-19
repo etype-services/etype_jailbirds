@@ -111,6 +111,9 @@ function etype_jailbirds_importer_import() {
                 var_dump($matches[0]);
                 $parts = str_split($matches[0][0], 2);
                 var_dump($parts);
+                $time = '20' . $parts[0] . '-' . $parts[1] . '-' . $parts[2];
+                $ymd = DateTime::createFromFormat('m-d-Y', $time)->format('Y-m-d');
+                echo $ymd;
                 continue;
 
                 ob_start();

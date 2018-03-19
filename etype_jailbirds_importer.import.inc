@@ -109,7 +109,7 @@ function etype_jailbirds_importer_import() {
                 var_dump($file);
                 preg_match_all('!\d+!', $file, $matches);
                 var_dump($matches[0]);
-                $parts = str_split($matches[0], 1);
+                $parts = str_split($matches[0][0], 2);
                 var_dump($parts);
                 continue;
 

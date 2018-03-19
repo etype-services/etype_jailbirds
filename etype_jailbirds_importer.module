@@ -41,7 +41,7 @@ function etype_jailbirds_importer_menu() {
  */
 function etype_jailbirds_importer_cronapi($op, $job = NULL) {
     $items['etype_json_importer_cron'] = array(
-        'description' => 'Import content from',
+        'description' => 'Import content',
         'rule' => '0 7 * * 6',
         'callback' => 'etype_jailbirds_importer_import',
         'file' => 'etype_jailbirds_importer.import.inc'

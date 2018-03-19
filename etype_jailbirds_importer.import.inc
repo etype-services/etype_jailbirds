@@ -71,8 +71,7 @@ function etype_jailbirds_importer_entity_create($item = [], $values = [], $entit
 /**
  * Parse JSON Files
  */
-function etype_jailbirds_importer_import()
-{
+function etype_jailbirds_importer_import() {
 
     global $user;
     set_time_limit ( 300 );
@@ -106,6 +105,9 @@ function etype_jailbirds_importer_import()
             $i = 0;
 
             foreach ($import_file_array as $file) {
+
+                var_dump($file);
+                continue;
 
                 ob_start();
                 ftp_get($conn_id, "php://output", './clients/BIRD/AAincoming/' . $file, FTP_ASCII);

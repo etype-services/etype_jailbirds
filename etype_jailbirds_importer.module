@@ -40,11 +40,11 @@ function etype_jailbirds_importer_menu() {
  * @return mixed
  */
 function etype_jailbirds_importer_cronapi($op, $job = NULL) {
-    /*$items['etype_xml_importer_cron'] = array(
-        'description' => 'Import content via XML from Olive',
-        'rule' => '* * * * *',
+    $items['etype_json_importer_cron'] = array(
+        'description' => 'Import content from',
+        'rule' => '0 7 * * 6',
         'callback' => 'etype_jailbirds_importer_import',
         'file' => 'etype_jailbirds_importer.import.inc'
     );
-    /* return $items; */
+    return $items;
 }

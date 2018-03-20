@@ -111,6 +111,7 @@ function etype_jailbirds_importer_import() {
                 ob_start();
                 echo 'Importing from' . $file . "\n";
                 ob_flush();
+                ob_end_clean();
 
                 watchdog('etype_jailbirds_importer', "eType Importer is importing stories from %file stories.", $variables = ['%file' => $file], $severity = WATCHDOG_NOTICE);
 
@@ -212,6 +213,7 @@ function etype_jailbirds_importer_import() {
                         ob_start();
                         echo "Imported $fullname from " . $element->edition . "\n";
                         ob_flush();
+                        ob_end_clean();
                         $i++;
                     }
                 }

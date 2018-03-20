@@ -123,7 +123,7 @@ function etype_jailbirds_importer_import() {
                 echo $int;
 
                 // if file is more than 6 days old, do not import
-                if ($int < 6) {
+                if ($int > 6) {
                     continue;
                 }
 

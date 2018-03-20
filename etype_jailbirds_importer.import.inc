@@ -216,12 +216,14 @@ function etype_jailbirds_importer_import() {
                         ob_end_clean();
                         $i++;
                     }
+                } else {
+                    watchdog('etype_jailbirds_importer', "No json found in %file.", $variables = ['%file' => $file], $severity = WATCHDOG_NOTICE);
                 }
             }
         }
 
-        watchdog('etype_jailbirds_importer', "eType Importer imported %num stories.", $variables = ['%num' => $i], $severity = WATCHDOG_NOTICE);
+        watchdog('etype_jailbirds_importer', "Imported %num stories.", $variables = ['%num' => $i], $severity = WATCHDOG_NOTICE);
     } else {
-        watchdog('etype_jailbirds_importer', "eType Importer could not log in to the FTP server at $ftp_server.", $variables = [], $severity = WATCHDOG_ERROR);
+        watchdog('etype_jailbirds_importer', "Could not log in to the FTP server at $ftp_server.", $variables = [], $severity = WATCHDOG_ERROR);
     }
 }

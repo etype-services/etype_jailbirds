@@ -186,7 +186,7 @@ function etype_jailbirds_importer_import() {
                         $rand = substr(md5(rand()), 0, 7);
                         $local_file = "/tmp/foto_$rand.jpg";
                         if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
-                            watchdog('etype_jailbirds_importer', "eType Importer could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
+                            watchdog('etype_jailbirds_importer', "Could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
                         }
 
                         $charge = isset($element->charge) ? $element->charge : $element->charge;

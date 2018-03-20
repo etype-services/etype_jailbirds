@@ -169,14 +169,15 @@ function etype_jailbirds_importer_import() {
                         }
 
                         /* COUNTY */
-                        $county = taxonomy_get_term_by_name($element->county, 'county');
+                        $county = str_replace('_', ' ', $element->county);
+                        $counties = taxonomy_get_term_by_name($county, 'county');
                         if (empty($county)) {
-                            $term = (object)['vid' => '11', 'name' => $element->county, 'vocabulary_machine_id' => 'county'];
+                            $term = (object)['vid' => '11', 'name' => $county, 'vocabulary_machine_id' => 'county'];
                             taxonomy_term_save($term);
-                            $county = taxonomy_get_term_by_name($element->county, 'county');
+                            $counties = taxonomy_get_term_by_name($county, 'county');
                         }
                         $county_arr = [];
-                        foreach ($county as $key=>$value) {
+                        foreach ($counties as $key=>$value) {
                             $county_arr[] = $key;
                         }
 
@@ -198,8 +199,9 @@ function etype_jailbirds_importer_import() {
                             mkdir($fotopath, '0755');
                         }
 
+                        $lastname = str_replace('/', '', $element->lname);
                         $fullname = $element->fname . ' ' . $element->lname;
-                        $image_name = $element->fname . '_' .$element->lname . '_' . $created . '.jpg';
+                        $image_name = $element->fname . '_' .$lastname . '_' . $created . '.jpg';
                         $node = [
                             'title' => $fullname,
                             'field_name' => $element->name,

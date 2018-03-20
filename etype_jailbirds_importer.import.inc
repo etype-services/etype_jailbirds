@@ -108,11 +108,6 @@ function etype_jailbirds_importer_import() {
 
             foreach ($import_file_array as $file) {
 
-                ob_start();
-                echo 'Importing from' . $file . "\n";
-                ob_flush();
-                ob_end_clean();
-
                 watchdog('etype_jailbirds_importer', "eType Importer is importing stories from %file stories.", $variables = ['%file' => $file], $severity = WATCHDOG_NOTICE);
 
                 // check date of file
@@ -128,6 +123,11 @@ function etype_jailbirds_importer_import() {
                 if ($int > 6) {
                     continue;
                 }
+
+                ob_start();
+                echo 'Importing from' . $file . "\n";
+                ob_flush();
+                ob_end_clean();
 
                 ob_start();
                 ftp_get($conn_id, "php://output", './clients/BIRD/AAincoming/' . $file, FTP_ASCII);

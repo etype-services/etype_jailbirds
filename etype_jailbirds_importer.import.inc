@@ -108,7 +108,7 @@ function etype_jailbirds_importer_import() {
 
             foreach ($import_file_array as $file) {
 
-                watchdog('etype_jailbirds_importer', "eType Importer is importing stories from %file stories.", $variables = ['%file' => $file], $severity = WATCHDOG_NOTICE);
+                watchdog('etype_jailbirds_importer', "%file is being imported.", $variables = ['%file' => $file], $severity = WATCHDOG_NOTICE);
 
                 // check date of file
                 preg_match_all('!\d+!', $file, $matches);

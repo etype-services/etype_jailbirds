@@ -105,12 +105,9 @@ function etype_jailbirds_importer_import() {
         if (count($import_file_array) > 0) {
 
             $i = 0;
+            $now = new DateTime();
 
             foreach ($import_file_array as $file) {
-
-                $now = new DateTime();
-
-                watchdog('etype_jailbirds_importer', "%file is being imported (%time).", $variables = ['%time' => $now->format('H:i:s'), '%file' => $file], $severity = WATCHDOG_NOTICE);
 
                 // check date of file
                 preg_match_all('!\d+!', $file, $matches);
@@ -131,6 +128,8 @@ function etype_jailbirds_importer_import() {
                 echo ' Importing from ' . $file . "\n";
                 ob_flush();
                 ob_end_clean();
+
+                watchdog('etype_jailbirds_importer', "%file is being imported (%time).", $variables = ['%time' => $now->format('H:i:s'), '%file' => $file], $severity = WATCHDOG_NOTICE);
 
                 // continue;
 

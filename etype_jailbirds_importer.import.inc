@@ -119,6 +119,8 @@ function etype_jailbirds_importer_import() {
                 $interval = $now->diff($date);
                 $int = $interval->format('%d');
 
+                echo $int;
+
                 // if file is more than 6 days old, do not import
                 if ($int > 6) {
                     continue;
@@ -128,6 +130,8 @@ function etype_jailbirds_importer_import() {
                 echo 'Importing from' . $file . "\n";
                 ob_flush();
                 ob_end_clean();
+
+                continue;
 
                 ob_start();
                 ftp_get($conn_id, "php://output", './clients/BIRD/AAincoming/' . $file, FTP_ASCII);

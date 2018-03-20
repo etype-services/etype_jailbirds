@@ -108,14 +108,15 @@ function etype_jailbirds_importer_import() {
 
             foreach ($import_file_array as $file) {
 
-                watchdog('etype_jailbirds_importer', "%file is being imported.", $variables = ['%file' => $file], $severity = WATCHDOG_NOTICE);
+                $now = new DateTime();
+
+                watchdog('etype_jailbirds_importer', "%file is being imported (%time).", $variables = ['%time' => $now->format('H:i:s'), '%file' => $file], $severity = WATCHDOG_NOTICE);
 
                 // check date of file
                 preg_match_all('!\d+!', $file, $matches);
                 $parts = str_split($matches[0][0], 2);
                 $time = '20' . $parts[0] . '-' . $parts[1] . '-' . $parts[2];
                 $date = new DateTime($time);
-                $now = new DateTime();
                 $interval = $now->diff($date);
                 $int = $interval->format('%d');
 
@@ -128,6 +129,8 @@ function etype_jailbirds_importer_import() {
                 echo 'Importing from' . $file . "\n";
                 ob_flush();
                 ob_end_clean();
+
+                continue;
 
                 ob_start();
                 ftp_get($conn_id, "php://output", './clients/BIRD/AAincoming/' . $file, FTP_ASCII);
@@ -222,7 +225,8 @@ function etype_jailbirds_importer_import() {
             }
         }
 
-        watchdog('etype_jailbirds_importer', "Imported %num stories.", $variables = ['%num' => $i], $severity = WATCHDOG_NOTICE);
+        $now = new DateTime();
+        watchdog('etype_jailbirds_importer', "Imported %num stories (%time).", $variables = ['%num' => $i, '%time' => $now->format('H:i:s')], $severity = WATCHDOG_NOTICE);
     } else {
         watchdog('etype_jailbirds_importer', "Could not log in to the FTP server at $ftp_server.", $variables = [], $severity = WATCHDOG_ERROR);
     }

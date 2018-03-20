@@ -132,7 +132,7 @@ function etype_jailbirds_importer_import() {
                 ob_flush();
                 ob_end_clean();
 
-                continue;
+                // continue;
 
                 ob_start();
                 ftp_get($conn_id, "php://output", './clients/BIRD/AAincoming/' . $file, FTP_ASCII);

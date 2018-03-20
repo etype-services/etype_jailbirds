@@ -93,6 +93,8 @@ function etype_jailbirds_importer_import() {
 
     if ($login_result === true) {
 
+        $i = 0;
+
         ftp_pasv($conn_id, true);
         $contents = ftp_nlist($conn_id, "./clients/BIRD/AAincoming");
         $import_file_array = preg_grep("/\.json/", $contents);
@@ -105,6 +107,10 @@ function etype_jailbirds_importer_import() {
             $i = 0;
 
             foreach ($import_file_array as $file) {
+
+                echo 'Importing from' . $file . "\n";
+
+                watchdog('etype_jailbirds_importer', "eType Importer is importing stories from %file stories.", $variables = ['%file' => $file], $severity = WATCHDOG_NOTICE);
 
                 // check date of file
                 preg_match_all('!\d+!', $file, $matches);
@@ -201,6 +207,7 @@ function etype_jailbirds_importer_import() {
                         // var_dump($node);
                         $values['created'] = $created;
                         etype_jailbirds_importer_entity_create($node, $values);
+                        echo "Imported $fullname from " . $element->edition . "\n";
                         $i++;
                     }
                 }

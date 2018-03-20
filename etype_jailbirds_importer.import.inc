@@ -180,7 +180,7 @@ function etype_jailbirds_importer_import() {
                         $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
 
                         $rand = substr(md5(rand()), 0, 7);
-                        $local_file = "/tmp/foto$rand.jpg";
+                        $local_file = "/tmp/foto_$rand.jpg";
                         if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
                             watchdog('etype_jailbirds_importer', "eType Importer could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
                         }
@@ -195,7 +195,7 @@ function etype_jailbirds_importer_import() {
                         }
 
                         $fullname = $element->fname . ' ' . $element->lname;
-                        $image_name = $element->fname . $element->lname . '_' . $created . '.jpg';
+                        $image_name = $element->fname . '_' .$element->lname . '_' . $created . '.jpg';
                         $node = [
                             'title' => $fullname,
                             'field_name' => $element->name,

@@ -188,7 +188,7 @@ function etype_jailbirds_importer_import() {
                         $local_file = "/tmp/foto_$rand.jpg";
                         //if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
                         //    watchdog('etype_jailbirds_importer', "Could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
-                        }
+                        //}
 
                         $charge = isset($element->charge) ? $element->charge : $element->charge;
                         $created = strtotime($element->pubdate);

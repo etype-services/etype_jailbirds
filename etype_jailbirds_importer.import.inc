@@ -195,9 +195,9 @@ function etype_jailbirds_importer_import() {
 
                         // make foto carpeta por fecha
                         $fotopath = '/data/web/public/drupal/sites/okjailbirds.etypegoogle9.com/files/fotos/' . $element->pubdate;
-                        if (!file_exists($fotopath)) {
+                        //if (!file_exists($fotopath)) {
                             // mkdir($fotopath, '0755');
-                        }
+                        //}
 
                         $lastname = str_replace('/', '', $element->lname);
                         $fullname = $element->fname . ' ' . $element->lname;

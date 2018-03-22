@@ -202,7 +202,7 @@ function etype_jailbirds_importer_import() {
                         $lastname = str_replace('/', '_', $element->lname);
                         $fullname = $element->fname . ' ' . $element->lname;
                         $image_name = $element->fname . '_' .$lastname . '_' . $created . '.jpg';
-                        echo $image_name . "\n";
+                        // echo $image_name . "\n";
                         $node = [
                             'title' => $fullname,
                             'field_name' => $element->name,

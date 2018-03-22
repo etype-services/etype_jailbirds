@@ -186,20 +186,20 @@ function etype_jailbirds_importer_import() {
 
                         $rand = substr(md5(rand()), 0, 7);
                         $local_file = "/tmp/foto_$rand.jpg";
-                        //if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
-                        //    watchdog('etype_jailbirds_importer', "Could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
-                        //}
+                        if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
+                            watchdog('etype_jailbirds_importer', "Could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
+                        }
 
                         $charge = isset($element->charge) ? $element->charge : $element->charge;
                         $created = strtotime($element->pubdate);
 
                         // make foto carpeta por fecha
                         $fotopath = '/data/web/public/drupal/sites/okjailbirds.etypegoogle9.com/files/fotos/' . $element->pubdate;
-                        //if (!file_exists($fotopath)) {
-                            // mkdir($fotopath, '0755');
-                        //}
+                        if (!file_exists($fotopath)) {
+                            mkdir($fotopath, '0755');
+                        }
 
-                        $lastname = str_replace('/', '', $element->lname);
+                        $lastname = str_replace('/', '_', $element->lname);
                         $fullname = $element->fname . ' ' . $element->lname;
                         $image_name = $element->fname . '_' .$lastname . '_' . $created . '.jpg';
                         echo $image_name . "\n";
@@ -216,7 +216,7 @@ function etype_jailbirds_importer_import() {
                         ];
                         // var_dump($node);
                         $values['created'] = $created;
-                        // etype_jailbirds_importer_entity_create($node, $values);
+                        etype_jailbirds_importer_entity_create($node, $values);
                         ob_start();
                         echo "Imported $fullname from " . $element->edition . "\n";
                         ob_flush();

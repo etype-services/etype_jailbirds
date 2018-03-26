@@ -115,9 +115,8 @@ function etype_jailbirds_importer_import() {
                 $time = '20' . $parts[0] . '-' . $parts[1] . '-' . $parts[2];
                 $date = new DateTime($time);
                 $interval = $now->diff($date);
-                $int = $interval->format('%days');
+                $int = $interval->format('%a');
 
-                var_dump($interval);
                 echo $time . ' ' . $int . ' ' . $file . "\n<br />";
 
                 continue;

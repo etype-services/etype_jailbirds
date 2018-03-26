@@ -71,10 +71,11 @@ function etype_jailbirds_importer_entity_create($item = [], $values = [], $entit
 /**
  * Parse JSON Files
  */
-function etype_jailbirds_importer_import() {
+function etype_jailbirds_importer_import()
+{
 
     global $user;
-    set_time_limit ( 300 );
+    set_time_limit(300);
 
     $ftp_server = "104.155.211.165";
     $ftp_user_name = "MGreene";
@@ -115,15 +116,11 @@ function etype_jailbirds_importer_import() {
                 $time = '20' . $parts[0] . '-' . $parts[1] . '-' . $parts[2];
                 $date = new DateTime($time);
                 $interval = $now->diff($date);
-                $int = $interval->format('%a');
-
-                echo $time . ' ' . $int . ' ' . $file . "\n<br />";
-
-                continue;
+                $int = $interval->format('%a'); // days
 
                 // if file is more than 6 days old, do not import
                 if ($int > 6) {
-                    // continue;
+                    continue;
                 }
 
                 ob_start();
@@ -166,7 +163,7 @@ function etype_jailbirds_importer_import() {
                             $edition = taxonomy_get_term_by_name($element->edition, 'edition');
                         }
                         $edition_arr = [];
-                        foreach ($edition as $key=>$value) {
+                        foreach ($edition as $key => $value) {
                             $edition_arr[] = $key;
                         }
 
@@ -179,7 +176,7 @@ function etype_jailbirds_importer_import() {
                             $counties = taxonomy_get_term_by_name($county, 'county');
                         }
                         $county_arr = [];
-                        foreach ($counties as $key=>$value) {
+                        foreach ($counties as $key => $value) {
                             $county_arr[] = $key;
                         }
 
@@ -203,7 +200,7 @@ function etype_jailbirds_importer_import() {
 
                         $lastname = str_replace('/', '_', $element->lname);
                         $fullname = $element->fname . ' ' . $element->lname;
-                        $image_name = $element->fname . '_' .$lastname . '_' . $created . '.jpg';
+                        $image_name = $element->fname . '_' . $lastname . '_' . $created . '.jpg';
                         // echo $image_name . "\n";
                         $node = [
                             'title' => $fullname,

@@ -117,7 +117,8 @@ function etype_jailbirds_importer_import() {
                 $interval = $now->diff($date);
                 $int = $interval->format('%d');
 
-                echo $interval. ' ' . $time . ' ' . $int . ' ' . $file . "\n<br />";
+                var_dump($interval);
+                echo $time . ' ' . $int . ' ' . $file . "\n<br />";
 
                 continue;
 

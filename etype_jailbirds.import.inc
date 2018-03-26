@@ -7,7 +7,7 @@
  * @param array $values
  * @param string $entity_type
  */
-function etype_jailbirds_importer_entity_create($item = [], $values = [], $entity_type = 'node')
+function etype_jailbirds_entity_create($item = [], $values = [], $entity_type = 'node')
 {
 
     $entity = entity_create($entity_type, $values);
@@ -71,7 +71,7 @@ function etype_jailbirds_importer_entity_create($item = [], $values = [], $entit
 /**
  * Parse JSON Files
  */
-function etype_jailbirds_importer_import()
+function etype_jailbirds_import()
 {
 
     global $user;
@@ -128,7 +128,7 @@ function etype_jailbirds_importer_import()
                 ob_flush();
                 ob_end_clean();
 
-                watchdog('etype_jailbirds_importer', "%file is being imported (%time).", $variables = ['%time' => $now->format('H:i:s'), '%file' => $file], $severity = WATCHDOG_NOTICE);
+                watchdog('jailbirds_importer', "%file is being imported (%time).", $variables = ['%time' => $now->format('H:i:s'), '%file' => $file], $severity = WATCHDOG_NOTICE);
 
                 // continue;
 
@@ -186,7 +186,7 @@ function etype_jailbirds_importer_import()
                         $rand = substr(md5(rand()), 0, 7);
                         $local_file = "/tmp/foto_$rand.jpg";
                         if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
-                            watchdog('etype_jailbirds_importer', "Could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
+                            watchdog('jailbirds_importer', "Could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
                         }
 
                         $charge = isset($element->charge) ? $element->charge : $element->charge;
@@ -215,7 +215,7 @@ function etype_jailbirds_importer_import()
                         ];
                         // var_dump($node);
                         $values['created'] = $created;
-                        etype_jailbirds_importer_entity_create($node, $values);
+                        etype_jailbirds_entity_create($node, $values);
                         ob_start();
                         echo "Imported $fullname from " . $element->edition . "\n";
                         ob_flush();
@@ -223,14 +223,14 @@ function etype_jailbirds_importer_import()
                         $i++;
                     }
                 } else {
-                    watchdog('etype_jailbirds_importer', "No json found in %file.", $variables = ['%file' => $file], $severity = WATCHDOG_NOTICE);
+                    watchdog('jailbirds_importer', "No json found in %file.", $variables = ['%file' => $file], $severity = WATCHDOG_NOTICE);
                 }
             }
         }
 
         $now = new DateTime();
-        watchdog('etype_jailbirds_importer', "Imported %num stories (%time).", $variables = ['%num' => $i, '%time' => $now->format('H:i:s')], $severity = WATCHDOG_NOTICE);
+        watchdog('jailbirds_importer', "Imported %num stories (%time).", $variables = ['%num' => $i, '%time' => $now->format('H:i:s')], $severity = WATCHDOG_NOTICE);
     } else {
-        watchdog('etype_jailbirds_importer', "Could not log in to the FTP server at $ftp_server.", $variables = [], $severity = WATCHDOG_ERROR);
+        watchdog('jailbirds_importer', "Could not log in to the FTP server at $ftp_server.", $variables = [], $severity = WATCHDOG_ERROR);
     }
 }

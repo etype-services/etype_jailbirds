@@ -1,7 +1,7 @@
-name = eType Services Node Importer for OK Jailbirds
+name = OK Jailbirds
 description = Custom module for EType Services.
 package = eType Services Custom Modules
 core = 7.x
-project = "etype_jailbirds_importer"
+project = "etype_jailbirds"
 dependencies[] = entity
 dependencies[] = etype

@@ -1,5 +1,3 @@
-#!/bin/env php
-
 <?php
 // define static var
 define('DRUPAL_ROOT', getcwd());

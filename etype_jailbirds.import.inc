@@ -195,7 +195,7 @@ function etype_jailbirds_import() {
 
             /* FOTO */
             $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
-
+            echo $foto;
             $rand = substr(md5(rand()), 0, 7);
             $local_file = "/tmp/foto_$rand.jpg";
             if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {

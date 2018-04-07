@@ -178,8 +178,8 @@ function etype_jailbirds_import() {
             }
 
             /* fix data */
-            $lastname = trim(str_replace(['/', ' '], '_', $element->lname));
-            $firstname = trim(str_replace(['/', ' '], '_', $element->fname));
+            $lastname = trim(str_replace(['/', ' ', ','], '_', $element->lname));
+            $firstname = trim(str_replace(['/', ' ', ','], '_', $element->fname));
             $fullname = $element->fname . ' ' . $element->lname;
             $charge = isset($element->charge) ? $element->charge : $element->charge;
             $created = strtotime($element->pubdate);

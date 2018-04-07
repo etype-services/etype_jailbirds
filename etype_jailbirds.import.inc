@@ -193,7 +193,7 @@ function etype_jailbirds_import()
                         $created = strtotime($element->pubdate);
 
                         // make foto carpeta por fecha
-                      $fotopath = '/mnt/data/web/public/drupal/sites/okjailbirds.etypegoogle9.com/files/fotos/' . $element->pubdate;
+                      $fotopath = '/mnt/data/web/public/drupal/sites/default/files/fotos/' . $element->pubdate;
                         if (!file_exists($fotopath)) {
                             mkdir($fotopath, '0755');
                         }

@@ -177,6 +177,7 @@ function etype_jailbirds_import() {
               $county_arr[] = $key;
             }
 
+            /* fix data */
             $lastname = trim(str_replace(['/', ' '], '_', $element->lname));
             $firstname = trim(str_replace(['/', ' '], '_', $element->fname));
             $fullname = $element->fname . ' ' . $element->lname;

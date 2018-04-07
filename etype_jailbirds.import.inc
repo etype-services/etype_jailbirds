@@ -177,28 +177,11 @@ function etype_jailbirds_import() {
               $county_arr[] = $key;
             }
 
-            /* FOTO */
-            $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
-
-            $rand = substr(md5(rand()), 0, 7);
-            $local_file = "/tmp/foto_$rand.jpg";
-            if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
-              watchdog('jailbirds_importer', "Could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
-            }
-
+            $lastname = str_replace('/', '_', $element->lname);
+            $fullname = $element->fname . ' ' . $element->lname;
             $charge = isset($element->charge) ? $element->charge : $element->charge;
             $created = strtotime($element->pubdate);
 
-            // make foto carpeta por fecha
-            $fotopath = '/mnt/data/web/public/drupal/sites/default/files/fotos/' . $element->pubdate;
-            if (!file_exists($fotopath)) {
-              mkdir($fotopath, '0755');
-            }
-
-            $lastname = str_replace('/', '_', $element->lname);
-            $fullname = $element->fname . ' ' . $element->lname;
-            $image_name = $element->fname . '_' . $lastname . '_' . $created . '.jpg';
-            // echo $image_name . "\n";
             $node = [
               'title' => $fullname,
               'field_name' => $element->name,
@@ -208,8 +191,25 @@ function etype_jailbirds_import() {
               'field_county' => $county_arr,
               'field_edition' => $edition_arr,
               'field_guid' => $element->guid,
-              'image' => ['name' => 'fotos/' . $element->pubdate . '/' . $image_name, 'path' => $local_file],
             ];
+
+            /* FOTO */
+            $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
+
+            $rand = substr(md5(rand()), 0, 7);
+            $local_file = "/tmp/foto_$rand.jpg";
+            if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
+              watchdog('jailbirds_importer', "Could not download $element->foto.", $variables = [], $severity = WATCHDOG_NOTICE);
+            } else {
+              // make foto carpeta por fecha
+              $fotopath = '/mnt/data/web/public/drupal/sites/default/files/fotos/' . $element->pubdate;
+              if (!file_exists($fotopath)) {
+                mkdir($fotopath, '0755');
+              }
+              $image_name = $element->fname . '_' . $lastname . '_' . $created . '.jpg';
+              $node['image'] = ['name' => 'fotos/' . $element->pubdate . '/' . $image_name, 'path' => $local_file];
+            }
+
             // var_dump($node);
             $values['created'] = $created;
             etype_jailbirds_entity_create($node, $values);

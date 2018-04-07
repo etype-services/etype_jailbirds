@@ -206,7 +206,7 @@ function etype_jailbirds_import() {
               if (!file_exists($fotopath)) {
                 mkdir($fotopath, '0755');
               }
-              $random_number = intval("0" . rand(1, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9));
+              $random_number = intval(rand(1, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9));
               $image_name = $element->fname . '_' . $lastname . '_' . $created . '_' . $random_number . '.jpg';
               $node['image'] = ['name' => 'fotos/' . $element->pubdate . '/' . $image_name, 'path' => $local_file];
             }

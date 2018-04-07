@@ -3,7 +3,7 @@
 define('DRUPAL_ROOT', getcwd());
 
 // include bootstrap
-include_once('./includes/bootstrap.inc');
+include_once('/mnt/data/web/public/drupal/includes/bootstrap.inc');
 
 // initialize stuff
 drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);

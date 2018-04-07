@@ -195,8 +195,6 @@ function etype_jailbirds_import() {
 
             /* FOTO */
             $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
-            echo $foto;
-
             $rand = substr(md5(rand()), 0, 7);
             $local_file = "/tmp/foto_$rand.jpg";
             if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
@@ -207,9 +205,9 @@ function etype_jailbirds_import() {
               if (!file_exists($fotopath)) {
                 mkdir($fotopath, '0755');
               }
-              $random_number = intval(rand(1, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9));
-              $image_name = $element->fname . '_' . $lastname . '_' . $created . '_' . $random_number . '.jpg';
-              $node['image'] = ['name' => 'fotos/' . $element->pubdate . '/' . $image_name, 'path' => $local_file];
+              $image_name = 'fotos/' . $element->pubdate . '/' . $element->fname . '_' . $lastname . '_' . $created . '_' . $rand . '.jpg';
+              echo $image_name;
+              $node['image'] = ['name' => $image_name, 'path' => $local_file];
             }
 
             // var_dump($node);

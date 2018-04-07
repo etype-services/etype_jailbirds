@@ -196,6 +196,7 @@ function etype_jailbirds_import() {
             /* FOTO */
             $foto = str_replace('ftp://104.155.211.165/FTP/MGreene/', "", $element->foto);
             echo $foto;
+
             $rand = substr(md5(rand()), 0, 7);
             $local_file = "/tmp/foto_$rand.jpg";
             if (!ftp_get($conn_id, $local_file, $foto, FTP_BINARY)) {
@@ -213,7 +214,7 @@ function etype_jailbirds_import() {
 
             // var_dump($node);
             $values['created'] = $created;
-            etype_jailbirds_entity_create($node, $values);
+            // etype_jailbirds_entity_create($node, $values);
             ob_start();
             echo "Imported $fullname from " . $element->edition . "\n";
             ob_flush();

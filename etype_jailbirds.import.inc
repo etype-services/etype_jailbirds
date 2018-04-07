@@ -208,7 +208,7 @@ function etype_jailbirds_import() {
                 mkdir($fotopath, '0755');
               }
               $image_name = 'fotos/' . $element->pubdate . '/' . $firstname . '_' . $lastname . '_' . $created . '_' . $rand . '.jpg';
-              echo $image_name;
+              echo $image_name . "\n";
               $node['image'] = ['name' => $image_name, 'path' => $local_file];
             }
 

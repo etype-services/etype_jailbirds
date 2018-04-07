@@ -33,21 +33,3 @@ function etype_jailbirds_menu()
 
     return $items;
 }
-
-
-/**
- * Cron Jobs
- * @param $op
- * @param null $job
- * @return mixed
- */
-function etype_jailbirds_cronapi($op, $job = NULL)
-{
-    $items['etype_jailbirds_import_cron'] = array(
-        'description' => 'Import content',
-        'rule' => '0 7 * * 6',
-        'callback' => 'etype_jailbirds_import',
-        'file' => 'etype_jailbirds.import.inc'
-    );
-    return $items;
-}

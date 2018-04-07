@@ -178,6 +178,7 @@ function etype_jailbirds_import() {
             }
 
             $lastname = trim(str_replace(['/', ' '], '_', $element->lname));
+            $firstname = trim(str_replace(['/', ' '], '_', $element->fname));
             $fullname = $element->fname . ' ' . $element->lname;
             $charge = isset($element->charge) ? $element->charge : $element->charge;
             $created = strtotime($element->pubdate);
@@ -205,7 +206,7 @@ function etype_jailbirds_import() {
               if (!file_exists($fotopath)) {
                 mkdir($fotopath, '0755');
               }
-              $image_name = 'fotos/' . $element->pubdate . '/' . trim($element->fname) . '_' . $lastname . '_' . $created . '_' . $rand . '.jpg';
+              $image_name = 'fotos/' . $element->pubdate . '/' . $firstname . '_' . $lastname . '_' . $created . '_' . $rand . '.jpg';
               echo $image_name;
               $node['image'] = ['name' => $image_name, 'path' => $local_file];
             }

@@ -177,7 +177,7 @@ function etype_jailbirds_import() {
               $county_arr[] = $key;
             }
 
-            $lastname = trim(str_replace('/', '_', $element->lname));
+            $lastname = trim(str_replace(['/', ' '], '_', $element->lname));
             $fullname = $element->fname . ' ' . $element->lname;
             $charge = isset($element->charge) ? $element->charge : $element->charge;
             $created = strtotime($element->pubdate);

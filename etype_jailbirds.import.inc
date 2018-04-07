@@ -72,7 +72,7 @@ function etype_jailbirds_entity_create($item = [], $values = [], $entity_type = 
 function etype_jailbirds_import() {
 
   global $user;
-  set_time_limit(0);
+  set_time_limit(0); // since max_execution_time (php.ini) and request_terminate_timeout (www.conf) are turned off this really is not necessary.
 
   $ftp_server = "104.155.211.165";
   $ftp_user_name = "MGreene";

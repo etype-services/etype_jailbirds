@@ -214,7 +214,7 @@ function etype_jailbirds_import() {
 
             // var_dump($node);
             $values['created'] = $created;
-            // etype_jailbirds_entity_create($node, $values);
+            etype_jailbirds_entity_create($node, $values);
             ob_start();
             echo "Imported $fullname from " . $element->edition . "\n";
             ob_flush();

@@ -14,6 +14,7 @@ function etype_jailbirds_permission()
 
 /**
  * add import and admin urls
+ * DEPRECATED -- DO NOT USE, IMPORT TOO LARGE
  * @return array
  */
 function etype_jailbirds_menu()

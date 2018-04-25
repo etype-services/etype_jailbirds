@@ -121,7 +121,7 @@ function etype_jailbirds_import() {
         }
 
         ob_start();
-        echo ' Importing from ' . $file . "\n";
+        echo 'Importing from ' . $file . "\n";
         ob_flush();
         ob_end_clean();
 

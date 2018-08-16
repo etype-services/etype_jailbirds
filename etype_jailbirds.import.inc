@@ -206,7 +206,9 @@ function etype_jailbirds_import() {
                 // make foto carpeta por fecha
                 $fotopath = '/mnt/data/web/public/drupal/sites/default/files/fotos/' . $element->pubdate;
                 if (!file_exists($fotopath)) {
-                  mkdir($fotopath, '0755');
+                  mkdir($fotopath, 0755);
+                } else {
+                  chmod($fotopath, 0755);
                 }
                 $image_name = 'fotos/' . $element->pubdate . '/' . $firstname . '_' . $lastname . '_' . $created . '_' . $rand . '.jpg';
                 // echo $image_name . "\n";

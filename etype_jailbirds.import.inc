@@ -250,5 +250,8 @@ function etype_jailbirds_test() {
     'language' => LANGUAGE_NONE,
     'premium' => 'default',
   ];
-  etype_jailbirds_entity_create([], $values, 'node');
+  $item = [
+    'title' => 'Tester',
+  ];
+  etype_jailbirds_entity_create($item, $values, 'node');
 }

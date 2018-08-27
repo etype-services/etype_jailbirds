@@ -87,6 +87,7 @@ function etype_jailbirds_import() {
     'comment' => 0,
     'promote' => 0,
     'language' => LANGUAGE_NONE,
+    'premium' => 'default',
   ];
 
   if ($login_result === TRUE) {
@@ -186,7 +187,7 @@ function etype_jailbirds_import() {
 
             $node = [
               'title' => $fullname,
-              'field_name' => $element->name,
+              'field_name' => trim($element->name),
               'field_booked_date' => $BookedDate,
               'field_released_date' => $ReleasedDate,
               'field_charge' => $charge,

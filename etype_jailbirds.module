@@ -3,34 +3,30 @@
 /**
  * Implements hook_permission().
  */
-function etype_jailbirds_permission()
-{
-    return array(
-        'administer json import' => array(
-            'title' => t('Administer JSON Import'),
-        )
-    );
+function etype_jailbirds_permission() {
+  return [
+    'administer json import' => [
+      'title' => t('Administer JSON Import'),
+    ],
+  ];
 }
 
 /**
- * add import and admin urls
- * DEPRECATED -- DO NOT USE, IMPORT TOO LARGE
+ * admin urls
  * @return array
  */
-function etype_jailbirds_menu()
-{
+function etype_jailbirds_menu() {
 
-    $items = array();
+  $items = [];
 
-    $items['import_jailbird_json'] = array(
-        'title' => 'Import OK Jailbirds JSON',
-        'description' => 'OK Jailbirds JSON Importer',
-        'page callback' => 'etype_jailbirds_import',
-        // 'access arguments' => array('administer json import'),
-        'access arguments' => array('access content'),
-        'type' => MENU_NORMAL_ITEM,
-        'file' => 'etype_jailbirds.import.inc'
-    );
+  $items['import_jailbird_test'] = [
+    'title' => 'Import OK Jailbirds JSON',
+    'description' => 'OK Jailbirds JSON Importer',
+    'page callback' => 'etype_jailbirds_test',
+    'access arguments' => ['access content'],
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'etype_jailbirds.import.inc',
+  ];
 
-    return $items;
+  return $items;
 }

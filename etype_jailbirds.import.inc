@@ -238,3 +238,17 @@ function etype_jailbirds_import() {
     watchdog('jailbirds_importer', "Could not log in to the FTP server at $ftp_server.", $variables = [], $severity = WATCHDOG_ERROR);
   }
 }
+
+function etype_jailbirds_test() {
+  global $user;
+  $values = [
+    'type' => 'fotoname',
+    'uid' => $user->uid,
+    'status' => 1,
+    'comment' => 0,
+    'promote' => 0,
+    'language' => LANGUAGE_NONE,
+    'premium' => 'default',
+  ];
+  etype_jailbirds_entity_create([], $values, 'node');
+}

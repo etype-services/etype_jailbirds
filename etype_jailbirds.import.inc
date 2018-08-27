@@ -239,6 +239,9 @@ function etype_jailbirds_import() {
   }
 }
 
+/**
+ * for testing
+ */
 function etype_jailbirds_test() {
   global $user;
   $values = [

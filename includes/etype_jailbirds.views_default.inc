@@ -22,7 +22,7 @@ function etype_jailbirds_views_default_views() {
     $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
     /* Display: By County */
-    $handler = $view->new_display('master', $county->name, 'master');
+    $handler = $view->new_display('default', $county->name, 'default');
     $handler->display->display_options['title'] = $county->name;
     $handler->display->display_options['use_more_always'] = FALSE;
     $handler->display->display_options['access']['type'] = 'perm';

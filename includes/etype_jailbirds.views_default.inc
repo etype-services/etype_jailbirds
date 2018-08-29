@@ -96,10 +96,6 @@ function etype_jailbirds_views_default_views() {
     $handler->display->display_options['filters']['field_county_tid']['type'] = 'select';
     $handler->display->display_options['filters']['field_county_tid']['vocabulary'] = 'county';
 
-    /* Display: Recent Additions */
-    $handler = $view->new_display('block', $county->name, 'block');
-    $handler->display->display_options['block_description'] = 'Recent Additions from ' . $county->name;
-
   }
 
   $views[$view->name] = $view;

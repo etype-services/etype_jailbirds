@@ -12,11 +12,11 @@ function etype_jailbirds_views_default_views() {
   foreach ($res as $county) {
 
     $view = new view();
-    $view->name = 'recent_from_county_' . $county->tid;
+    $view->name = 'county_' . $county->tid;
     $view->description = '';
     $view->tag = 'default';
     $view->base_table = 'node';
-    $view->human_name = 'Recent from ' . $county->name;
+    $view->human_name = $county->name;
     $view->core = 7;
     $view->api_version = '3.0';
     $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -80,6 +80,8 @@ function etype_jailbirds_views_default_views() {
     ];
     $handler->display->display_options['filters']['field_county_tid']['type'] = 'select';
     $handler->display->display_options['filters']['field_county_tid']['vocabulary'] = 'county';
+    $handler = $view->new_display('block', $county->name, 'block_' . $county->tid);
+    $handler->display->display_options['block_description'] = $county->name;
 
     $i++;
 

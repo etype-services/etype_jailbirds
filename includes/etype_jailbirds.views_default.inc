@@ -48,37 +48,6 @@ function etype_jailbirds_views_default_views() {
     ];
     $handler->display->display_options['fields']['field_image']['delta_limit'] = '1';
     $handler->display->display_options['fields']['field_image']['delta_offset'] = '0';
-    /* Field: Content: Title */
-    $handler->display->display_options['fields']['title']['id'] = 'title';
-    $handler->display->display_options['fields']['title']['table'] = 'node';
-    $handler->display->display_options['fields']['title']['field'] = 'title';
-    $handler->display->display_options['fields']['title']['label'] = '';
-    $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
-    $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
-    $handler->display->display_options['fields']['title']['element_type'] = 'h3';
-    $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
-    /* Sort criterion: Content: Post date */
-    $handler->display->display_options['sorts']['created']['id'] = 'created';
-    $handler->display->display_options['sorts']['created']['table'] = 'node';
-    $handler->display->display_options['sorts']['created']['field'] = 'created';
-    $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-    /* Filter criterion: Content: Type */
-    $handler->display->display_options['filters']['type']['id'] = 'type';
-    $handler->display->display_options['filters']['type']['table'] = 'node';
-    $handler->display->display_options['filters']['type']['field'] = 'type';
-    $handler->display->display_options['filters']['type']['value'] = [
-      'fotoname' => 'fotoname',
-    ];
-    $handler->display->display_options['filters']['type']['group'] = 1;
-    /* Filter criterion: Content: County (field_county) */
-    $handler->display->display_options['filters']['field_county_tid']['id'] = 'field_county_tid';
-    $handler->display->display_options['filters']['field_county_tid']['table'] = 'field_data_field_county';
-    $handler->display->display_options['filters']['field_county_tid']['field'] = 'field_county_tid';
-    $handler->display->display_options['filters']['field_county_tid']['value'] = [
-      $county->tid => "$county->tid",
-    ];
-    $handler->display->display_options['filters']['field_county_tid']['type'] = 'select';
-    $handler->display->display_options['filters']['field_county_tid']['vocabulary'] = 'county';
 
     $i++;
   }

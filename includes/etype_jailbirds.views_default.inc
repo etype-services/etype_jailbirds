@@ -20,7 +20,7 @@ function etype_jailbirds_views_default_views() {
   foreach ($res as $county) {
 
     /* Display: By County */
-    $handler = $view->new_display('block', '$county->name', 'block');
+    $handler = $view->new_display('block', $county->name, 'block');
     $handler->display->display_options['title'] = $county->name;
     $handler->display->display_options['use_more_always'] = FALSE;
     $handler->display->display_options['access']['type'] = 'perm';

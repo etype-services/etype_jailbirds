@@ -31,7 +31,6 @@ function etype_jailbirds_views_default_views() {
     $handler->display->display_options['pager']['options']['items_per_page'] = '5';
     $handler->display->display_options['pager']['options']['offset'] = '0';
     $handler->display->display_options['style_plugin'] = 'fluid_grid';
-    $handler->display->display_options['style_options']['items_width'] = '100';
     $handler->display->display_options['style_options']['box_shadow'] = '0';
     $handler->display->display_options['style_options']['border_radius'] = '0';
     $handler->display->display_options['row_plugin'] = 'fields';

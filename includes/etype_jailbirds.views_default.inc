@@ -5,21 +5,22 @@
  */
 function etype_jailbirds_views_default_views() {
 
-  $view = new view();
-  $view->name = 'recent_from_counties';
-  $view->description = '';
-  $view->tag = 'default';
-  $view->base_table = 'node';
-  $view->human_name = 'Recent Additions by County';
-  $view->core = 7;
-  $view->api_version = '3.0';
-  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
-
   /* County */
   $res = taxonomy_get_tree(11);
   foreach ($res as $county) {
-    /* Display: Master */
-    $handler = $view->new_display('default', $county->name, 'default');
+
+    $view = new view();
+    $view->name = 'recent_from_county' . $county->tid;
+    $view->description = '';
+    $view->tag = 'default';
+    $view->base_table = 'node';
+    $view->human_name = 'Recent Additions from ' . $county->name;
+    $view->core = 7;
+    $view->api_version = '3.0';
+    $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+    /* Display: By County */
+    $handler = $view->new_display('default', 'Master', 'default');
     $handler->display->display_options['title'] = $county->name;
     $handler->display->display_options['use_more_always'] = FALSE;
     $handler->display->display_options['access']['type'] = 'perm';
@@ -88,9 +89,9 @@ function etype_jailbirds_views_default_views() {
     $handler = $view->new_display('block', 'Recent Additions from ' . $county->name, 'block');
     $handler->display->display_options['block_description'] = 'Recent Additions from ' . $county->name;
 
-  }
+    $views[$view->name] = $view;
 
-  $views[$view->name] = $view;
+  }
 
   // Repeat all of the above for each view the module should provide. At the
   // end, return array of default views.

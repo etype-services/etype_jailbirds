@@ -123,8 +123,8 @@ function etype_jailbird_views_default_views() {
   $handler->display->display_options['filters']['field_county_tid']['vocabulary'] = 'county';
 
   /* Display: Recent Additions */
-  $handler = $view->new_display('block', 'Recent Additions', 'block');
-  $handler->display->display_options['block_description'] = 'Recent Additions';
+  $handler = $view->new_display('block', 'Recent Additions Auto', 'block');
+  $handler->display->display_options['block_description'] = 'Recent Additions Auto';
   $views[$view->name] = $view;
 
   // Repeat all of the above for each view the module should provide. At the

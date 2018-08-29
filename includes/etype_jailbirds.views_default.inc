@@ -68,10 +68,11 @@ function etype_jailbirds_views_default_views() {
 
   /* County */
   $res = taxonomy_get_tree(11);
+  $i = 1;
   foreach ($res as $county) {
 
     /* Display: By County */
-    $handler = $view->new_display('block', $county->name, 'block');
+    $handler = $view->new_display('block', $county->name, 'block_' . $i);
     $handler->display->display_options['title'] = $county->name;
     $handler->display->display_options['use_more_always'] = FALSE;
     $handler->display->display_options['access']['type'] = 'perm';
@@ -96,6 +97,7 @@ function etype_jailbirds_views_default_views() {
     $handler->display->display_options['filters']['field_county_tid']['type'] = 'select';
     $handler->display->display_options['filters']['field_county_tid']['vocabulary'] = 'county';
 
+    $i++;
   }
 
   $views[$view->name] = $view;

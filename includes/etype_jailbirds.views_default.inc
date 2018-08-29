@@ -64,6 +64,12 @@ function etype_jailbirds_views_default_views() {
     'fotoname' => 'fotoname',
   ];
   $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: County (field_county) */
+  $handler->display->display_options['filters']['field_county_tid']['id'] = 'field_county_tid';
+  $handler->display->display_options['filters']['field_county_tid']['table'] = 'field_data_field_county';
+  $handler->display->display_options['filters']['field_county_tid']['field'] = 'field_county_tid';
+  $handler->display->display_options['filters']['field_county_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_county_tid']['vocabulary'] = 'county';
 
   /* County */
   $res = taxonomy_get_tree(11);

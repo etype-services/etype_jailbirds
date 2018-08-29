@@ -68,6 +68,9 @@ function etype_jailbirds_views_default_views() {
   $handler->display->display_options['filters']['field_county_tid']['id'] = 'field_county_tid';
   $handler->display->display_options['filters']['field_county_tid']['table'] = 'field_data_field_county';
   $handler->display->display_options['filters']['field_county_tid']['field'] = 'field_county_tid';
+  $handler->display->display_options['filters']['field_county_tid']['value'] = [
+    1 => "1",
+  ];
   $handler->display->display_options['filters']['field_county_tid']['type'] = 'select';
   $handler->display->display_options['filters']['field_county_tid']['vocabulary'] = 'county';
 

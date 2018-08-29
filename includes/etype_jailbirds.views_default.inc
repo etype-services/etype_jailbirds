@@ -3,7 +3,7 @@
 /**
  * @return mixed
  */
-function etype_jailbird_views_default_views() {
+function etype_jailbirds_views_default_views() {
 
   $view = new view();
   $view->name = 'recent_from_counties';
